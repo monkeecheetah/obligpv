@@ -2,7 +2,7 @@ import java.io.*;
 
 public class NorskRoman2 extends Roman2{
 
-	public String maalform;
+	private String maalform;
 
 	public NorskRoman2(){}
 
@@ -19,11 +19,12 @@ public class NorskRoman2 extends Roman2{
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		if( input != null){
+			System.out.println("vi er i norskroman");
 			super.lesFraFil( input );
 			maalform = input.readUTF();
+			System.out.println("Målform= " + maalform );
 			return true;
-		}
-		
+		}		
 	 	//< Leser verdier fra fil og plaserer dem i de tilhørende datafeltene>
 	 	return false;
 	}

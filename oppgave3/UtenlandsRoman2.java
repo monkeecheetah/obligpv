@@ -17,11 +17,12 @@ public class UtenlandsRoman2 extends Roman2{
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		if( input != null){
+		System.out.println("vi er i utenlandsroman");
 			super.lesFraFil( input );
 			origSpraak = input.readUTF();
+		System.out.println("Originalspråk =" + origSpraak);
 			return true;
 		}
-
 		return false;
 	}
 

@@ -31,14 +31,14 @@ public abstract class Bok2{
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		if( input != null){
 			System.out.println("vi er i lesFraFil metoden til Bok");
-			//typeBok = input.readUTF();
-			//System.out.println("typeBok =" + typeBok);
 			forfatter = input.readUTF();
-			System.out.println("Forfatter =" + forfatter);
+			System.out.println("Forfatter = " + forfatter);
 			tittel = input.readUTF();
-			System.out.println("Tittel =" + tittel);
+			System.out.println("Tittel = " + tittel);
 			sideantall = input.readInt();
+			System.out.println("sideantall = " + sideantall);
 			pris = input.readDouble();
+			System.out.println("pris = " + pris);
 			return true;
 		}
 		return false;

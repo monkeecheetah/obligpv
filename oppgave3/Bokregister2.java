@@ -31,35 +31,29 @@ public class Bokregister2{
 
   public void lesFraFil( String filnavn ){
     try( DataInputStream fil = new DataInputStream( new FileInputStream(filnavn))){
-    String fagBok = "fagbok";  
+      String t = fil.readUTF();  
       while( true ){
-      String t = fil.readUTF();
       System.out.println( "fil.readUTF() = " + t );
-
 
         if(t.equals("fagbok") ){
           System.out.println("vi er i 'fagbok' sin if gren ");
           Fagbok2 nyFagbok = new Fagbok2();
-          System.out.println("det er laget et nytt objekt av fagbok");
           nyFagbok.lesFraFil( fil );
-          System.out.println("panda3");
           settInn( nyFagbok );
         }else if(t.equals("skolebok") ){
           Skolebok2 nySkolebok = new Skolebok2();
           nySkolebok.lesFraFil( fil );
-          System.out.println("nySkolebok.lesFraFil( fil ) =" + nySkolebok.lesFraFil( fil ));
           settInn( nySkolebok );
         }else if(t.equals("uroman") ){
           UtenlandsRoman2 nyURoman = new UtenlandsRoman2();
           nyURoman.lesFraFil( fil );
-          System.out.println("nyURoman.lesFraFil( fil ) =" + nyURoman.lesFraFil( fil ));
           settInn( nyURoman );
         }else if(t.equals("nroman") ){
           NorskRoman2 nyNRoman = new NorskRoman2();
           nyNRoman.lesFraFil( fil );
-          System.out.println("nyNRoman.lesFraFil( fil ) =" + nyNRoman.lesFraFil( fil ));
           settInn( nyNRoman );
         }
+        t = fil.readUTF();
       }
     }catch( FileNotFoundException fnfe ){
       System.err.println("Finner ikke fil" + filnavn );

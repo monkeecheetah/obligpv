@@ -18,8 +18,10 @@ public abstract class Roman2 extends Bok2 {
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		if( input != null){
+			System.out.println("vi er i roman");
 			super.lesFraFil( input );
 			sjanger = input.readUTF();
+			System.out.println("sjanger =" + sjanger);
 			return true;
 		}
 		
