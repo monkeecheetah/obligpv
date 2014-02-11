@@ -1,6 +1,6 @@
 import java.io.*;
 
-abstract class Roman2 extends Bok2 {
+public abstract class Roman2 extends Bok2 {
 	private String sjanger;
 
 	public Roman2(){}

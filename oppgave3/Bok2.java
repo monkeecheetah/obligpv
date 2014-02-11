@@ -1,6 +1,6 @@
 import java.io.*;
 
-abstract class Bok2{
+public abstract class Bok2{
 
 	private String forfatter, tittel, typeBok;
 	private int sideantall;
