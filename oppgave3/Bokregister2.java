@@ -8,10 +8,11 @@ public class Bokregister2{
   //registrerer et bokobjekt
   public void settInn( Bok2 ny )
   {
+    System.out.println("vi er i sett inn metoden");
     if(ny == null){
+      System.out.println("Objektet er tomt");
       return;
     }
-
     ny.neste = head;
     head = ny;
   }
@@ -30,20 +31,35 @@ public class Bokregister2{
 
   public void lesFraFil( String filnavn ){
     try( DataInputStream fil = new DataInputStream( new FileInputStream(filnavn))){
+    String fagBok = "fagbok";  
       while( true ){
-        String t = fil.readUTF();
-        System.out.println( "fil.readUTF() = " + t );
+      String t = fil.readUTF();
+      System.out.println( "fil.readUTF() = " + t );
+
 
         if(t.equals("fagbok") ){
-          Fagbok2 ny = new Fagbok2();
-          settInn( ny );
-          ny.lesFraFil( fil );
-        }else if(t.equals("skolebok") )
-          settInn( new Skolebok2() );
-        else if(t.equals("uroman") )
-          settInn( new UtenlandsRoman2() );
-        else if(t.equals("nroman") )
-          settInn( new NorskRoman2() );
+          System.out.println("vi er i 'fagbok' sin if gren ");
+          Fagbok2 nyFagbok = new Fagbok2();
+          System.out.println("det er laget et nytt objekt av fagbok");
+          nyFagbok.lesFraFil( fil );
+          System.out.println("panda3");
+          settInn( nyFagbok );
+        }else if(t.equals("skolebok") ){
+          Skolebok2 nySkolebok = new Skolebok2();
+          nySkolebok.lesFraFil( fil );
+          System.out.println("nySkolebok.lesFraFil( fil ) =" + nySkolebok.lesFraFil( fil ));
+          settInn( nySkolebok );
+        }else if(t.equals("uroman") ){
+          UtenlandsRoman2 nyURoman = new UtenlandsRoman2();
+          nyURoman.lesFraFil( fil );
+          System.out.println("nyURoman.lesFraFil( fil ) =" + nyURoman.lesFraFil( fil ));
+          settInn( nyURoman );
+        }else if(t.equals("nroman") ){
+          NorskRoman2 nyNRoman = new NorskRoman2();
+          nyNRoman.lesFraFil( fil );
+          System.out.println("nyNRoman.lesFraFil( fil ) =" + nyNRoman.lesFraFil( fil ));
+          settInn( nyNRoman );
+        }
       }
     }catch( FileNotFoundException fnfe ){
       System.err.println("Finner ikke fil" + filnavn );

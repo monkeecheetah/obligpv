@@ -16,12 +16,13 @@ public class Fagbok2 extends Bok2{
 	}
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
+		System.out.println("Vi er i fagbok klassen");
 		if( input != null){
+			System.out.println("og DataInputStream er ikke et tomt objekt");
 			super.lesFraFil( input );
 			fagbok = input.readUTF();
 			return true;
 		}
-		
 	 	//< Leser verdier fra fil og plaserer dem i de tilhørende datafeltene>
 	 	return false;
 	}

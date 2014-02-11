@@ -95,7 +95,7 @@ private Bok2 books;
 		c.add( utskrift );
 		c.add( new JScrollPane( utskrift ) );
 		
-		register.lesFraFil( "bokhylla.dta");
+		register.lesFraFil( "bokhylla.dta" );
 		visRegister();
 
 		setVisible(true);
@@ -106,42 +106,15 @@ private Bok2 books;
 		register.skrivTilfil("bokhylla.dta");
 	}
 
-/*	private void lesFil(){
-		try( ObjectInputStream innfil = new ObjectInputStream( new FileInputStream("bokliste.dta"))){
-			register = (Bokregister2) innfil.readObject();
-		}catch(ClassNotFoundException cnfe){
-			visMelding(cnfe.getMessage() );
-			visMelding( "Oppretter tom liste");
-			register = new Bokregister2();
-		}catch(FileNotFoundException fne){
-			visMelding( "Finner ikke datafil. Opretter tom liste" );
-			register = new Bokregister2();
-		}catch(IOException ioe){
-			visMelding( "Innlesingsfeil. Oppretter tom liste" );
-			register = new Bokregister2();
-		}
-	}
-
-	public void skrivTilFil(){
-		try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream("bokliste.dta"))){
-			utfil.writeObject(register);
-		}catch( NotSerializableException nse){
-			visMelding("Objektet er ikke serialisert");
-		}catch( IOException ioe){
-			visMelding("Problem med utskrift til fil.");
-		}
-	}*/
-
 	public void registrerFagbok(){
 		String f = forfatter.getText();
 		String t = tittel.getText();
 		String fb = fagomraade.getText();
 		if( f.length() == 0 || t.length() == 0 || fb.length() == 0 ){
-			visMelding( "Fyll inn forfatter, tittel og fagområde" );
+			visMelding( "Fyll inn forfatter, tittel og fagområde\npris og sideantall" );
 			return;
 		}
 		try{
-
 			int s = Integer.parseInt( sideAntall.getText() );
 			double p = Double.parseDouble( pris.getText() );
 			register.settInn( new Fagbok2(f, t, s, p, fb) );
@@ -157,7 +130,7 @@ private Bok2 books;
 		String t = tittel.getText();
 		String sf = skoleFag.getText() ;
 		if( f.length() == 0 || t.length() == 0 || sf.length() == 0  ){
-			visMelding( "Fyll inn forfatter, tittel og fagområde" );
+			visMelding( "Fyll inn forfatter, tittel og skolefad\nklassetrinn, pris og sideantall" );
 			return;
 		}
 		try{	
@@ -178,7 +151,7 @@ private Bok2 books;
 		String sj = sjanger.getText();
 		String m = maalform.getText();
 		if( f.length() == 0 || t.length() == 0 || sj.length() == 0 || m.length() == 0 ){
-			visMelding( "Alle felter må fylles inn:\nForfatter, tittel, sjanger, målform" );
+			visMelding( "Alle felter må fylles inn:\nForfatter, tittel, sjanger, målformm\npris og sideantall" );
 			return;
 		}
 		try{
@@ -207,14 +180,14 @@ private Bok2 books;
 		String sj = sjanger.getText();
 		String o = spraak.getText();
 		if( f.length() == 0 || t.length() == 0 || sj.length() == 0 || o.length() == 0 ){
-			visMelding(" Ingen registrering pga.feil i tallformat");
+			visMelding("Fyll inn: forfatter, tittel, sjanger, språk,\nsideantall og pris");
 			return;
 		}
 		try{
 			int s = Integer.parseInt( sideAntall.getText() );
 			double p = Double.parseDouble( pris.getText() );
 			register.settInn( new UtenlandsRoman2(f, t, s, p, sj, o));
-			visMelding( "Ny Skolebok Utenlandsk Roman" );
+			visMelding( "Ny  Utenlandsk Roman Registrert" );
 		}
 		catch( NumberFormatException e){
 			visMelding("Ingen registrering pga. feil i tallformat");

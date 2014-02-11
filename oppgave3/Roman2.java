@@ -6,7 +6,7 @@ public abstract class Roman2 extends Bok2 {
 	public Roman2(){}
 
 	public Roman2(String boktype, String f, String t, int s, double p, String sj){
-		super("", f, t, s, p);
+		super(boktype, f, t, s, p);
 		sjanger = sj;
 	}
 

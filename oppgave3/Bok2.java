@@ -30,17 +30,19 @@ public abstract class Bok2{
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		if( input != null){
-			typeBok = input.readUTF();
+			System.out.println("vi er i lesFraFil metoden til Bok");
+			//typeBok = input.readUTF();
+			//System.out.println("typeBok =" + typeBok);
 			forfatter = input.readUTF();
+			System.out.println("Forfatter =" + forfatter);
 			tittel = input.readUTF();
+			System.out.println("Tittel =" + tittel);
 			sideantall = input.readInt();
 			pris = input.readDouble();
 			return true;
 		}
 		return false;
 	}
-
-
 
 	public String toString(){
 		return "\nForfatter: " + forfatter + "\n"+
