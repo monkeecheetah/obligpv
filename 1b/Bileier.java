@@ -25,6 +25,14 @@ public abstract class Bileier {
 		adresse = a;
 		next =  null;
 	}
+
+	public String getNavn() {
+		return navn;
+	}
+
+	public String toString() {
+		return "Navn:"+navn+"\nAdresse:"+adresse;
+	}
 }
 /*
 Programmet skal kunne utfore folgende:
