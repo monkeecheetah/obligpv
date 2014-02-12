@@ -14,6 +14,8 @@ public class Bokregister2{
     head = ny;
   }
 
+
+
   public void skrivTilfil( String filnavn ){
     try( DataOutputStream fil = new DataOutputStream( new FileOutputStream(filnavn) ) ){
       Bok2 pointer = head;

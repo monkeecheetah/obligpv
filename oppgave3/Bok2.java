@@ -34,9 +34,11 @@ public abstract class Bok2{
 		//< Skriver datafeltenes verdier til fil. >
 	}
 
-	public boolean lesFraFil( DataInputStream input) throws IOException{
+	public boolean lesFraFil( String type, DataInputStream input) throws IOException{
 		if( input != null){
 			System.out.println("vi er i lesFraFil metoden til Bok");
+			System.out.println("Vi er i lesFra");
+			typeBok = type;
 			forfatter = input.readUTF();
 			System.out.println("Forfatter = " + forfatter);
 			tittel = input.readUTF();

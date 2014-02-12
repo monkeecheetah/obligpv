@@ -2,10 +2,11 @@ import java.io.*;
 public class Fagbok2 extends Bok2{
 
 	private String fagbok;
-	private  String typeBok = "fagbok";	public Fagbok2(){}
+	private  static final String TYPE = "fagbok";	
+	public Fagbok2(){}
 
 	public Fagbok2(String f, String t, int s, double p, String fb){
-		super("fagbok", f, t, s, p);
+		super(TYPE, f, t, s, p);
 		System.out.println("vi er i fagbok");
 		fagbok = fb;
 		System.out.println("Fagområde = " + fb);
@@ -20,7 +21,7 @@ public class Fagbok2 extends Bok2{
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		System.out.println("Vi er i fagbok les Fra fil metoden");
 		if( input != null){
-			super.lesFraFil( input );
+			super.lesFraFil( TYPE, input );
 			fagbok = input.readUTF();
 			System.out.println("Fagområde =" + fagbok);
 
