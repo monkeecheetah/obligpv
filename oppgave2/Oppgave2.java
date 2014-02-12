@@ -1,23 +1,8 @@
-// Lag et program som leser inn et katalognavn eller filnavn via et dialogvindu.
+// programmutvikling oblig 1 OPPGAVE 2 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
 
-// Hvis det innleste navnet er en katalog skal følgende skrives ut på skjermen:
-
-// Navnet representerer en katalog
-
-// Det totale antall elementer som katalogen inneholder (filer og underkataloger) og navnene på disse.
-
-// Hvis elementet er en java-fil skal navnet etterfølges av antall kodelinjer.
-
-// Det totale antall kodelinjer som java-filene inneholder tilsammen.
-
-// Hvis det innleste navnet er en tekstfil (dvs. ikke byte-fil) eller en java-fil, skal det velges en ny, ubrukt tekstfil, ved hjelp av showSaveDialog-metoden i JFileChooser-klassen. Innholdet i den innleste filen skal så skrives til den nye tekstfilen, slik at hver linje starter med linjenummeret. Etter dette skal følgende skrives ut på skjermen:
-
-// Navnet (på filen det leses fra) representerer en fil
-
-// Navnet på den nye filen (med linjenummerne) som er opprettet og opplysninger om hva den inneholder.
-
-// Hint! Del programmet opp i flere mindre metoder! 
-// For å få testet ut programmet må katalogen class-filen ligger i inneholde en eller flere underkataloger som inneholder filer, deriblant java-filer. Forøvrig, se Mer om File-klassen.
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -29,8 +14,8 @@ public class Oppgave2 extends JFrame{
 	private JButton ok;
 	private JTextArea utfelt;
 
-
 	private File navn;
+	private File temp;
 
 	private Lytter lytt;
 	
@@ -59,13 +44,14 @@ public class Oppgave2 extends JFrame{
 		ok.addActionListener(lytt);
 		c.add( utfelt );
 		utfelt.setEditable(false);
+		add( new JScrollPane( utfelt ));
 		setSize(550,550);
 		setVisible(true);
 	}
 
 	public void katalog(){
-		if(!navn.isDirectory() )
-			return;
+		 if(!navn.isDirectory() )
+		 	return;
 
 		String print = " ";
 		String[]filliste = navn.list();
@@ -73,48 +59,50 @@ public class Oppgave2 extends JFrame{
 		int antallFiler = 0;
 		int antallLinjerprFil = 0;
 		int antallLinjer = 0;
-		int test = 0;
+
 		utfelt.setText( navn + " er en Katalog\n");
 
 		utfelt.append("\n Navn på filer i " + navn + "katalogen:\n");
-		
+	
 		for(int i = 0; i < filliste.length; i++ ){
 			print += ( "\n" + filliste[i] );
-
+			temp = new File(navn+"/"+filliste[i]);
 			if( filliste[i].matches( regex )){
-				print += "dette er en javafil";
-				File temp = new File( filliste[i] );
-				test++;
-				System.out.println( test + "" + temp);
-				
-				try( BufferedReader inn = new BufferedReader( 
-					new FileReader(temp))){
-					System.out.println("vi er i try catch");
-					String linje = "";
+
+				try(BufferedReader innfil = new BufferedReader(new FileReader(temp))){
+					String innlinjer = null;
 
 					do{
-						linje = inn.readLine();
-						System.out.println("linje");
-						if( linje != null)
+						innlinjer = innfil.readLine();
+						if(innlinjer != null)
 							antallLinjerprFil ++;
-					}while( linje != null);
+					}while(innlinjer != null );	
+					
+				}catch(IOException ioe){
+					System.out.println("error!!!!");
+				}
+				print += "\t   <---Antall kodelinjer = " + antallLinjerprFil;
 
-						print += ("Antall linjer i filen" + antallLinjerprFil );
-				}catch( IOException ioe){
-					System.out.println("her er en feil");
-				}//slutt på try catch
-				antallLinjer += antallLinjerprFil;			
-				
+				String fil = filliste[i];
+				System.out.println(temp);					
+			}
+			antallLinjer += antallLinjerprFil;			
+			antallFiler ++;	
 			}//slutt på for
-			antallFiler ++;
-		}
 		utfelt.append("Tilsammen antall elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
 	}
 
 	public void fil(){
 		if(!navn.isFile())
 			return;
-		System.out.println("");
+
+		try(BufferedReader innfil = new BufferedReader(new FileReader(navn))){
+		
+			
+		}catch(IOException ioe){
+			System.out.println("error");
+		}
+
 		utfelt.append( navn + " er en fil");
 	}
 

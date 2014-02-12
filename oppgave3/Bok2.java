@@ -26,12 +26,6 @@ public abstract class Bok2{
 	}
 
 	public void skrivTilFil( DataOutputStream output ) throws IOException{
-		System.out.println("Vi er i skriv til fil i bok");
-		System.out.println("Type bok = " + typeBok);
-		System.out.println("forfatter =" + forfatter);
-		System.out.println("Tittel = " + tittel);
-		System.out.println("Sideantall = " + sideantall);
-		System.out.println("Pris = " + pris);
 		output.writeUTF( typeBok );
 		output.writeUTF( forfatter );
 		output.writeUTF( tittel );
@@ -41,17 +35,11 @@ public abstract class Bok2{
 
 	public boolean lesFraFil( String type, DataInputStream input) throws IOException{
 		if( input != null){
-			System.out.println("vi er i lesFraFil metoden til Bok");
-			System.out.println("Vi er i lesFra");
 			typeBok = type;
 			forfatter = input.readUTF();
-			System.out.println("Forfatter = " + forfatter);
 			tittel = input.readUTF();
-			System.out.println("Tittel = " + tittel);
 			sideantall = input.readInt();
-			System.out.println("sideantall = " + sideantall);
 			pris = input.readDouble();
-			System.out.println("pris = " + pris);
 			return true;
 		}
 		return false;

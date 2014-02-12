@@ -40,7 +40,6 @@ public class Bokregister2{
       System.out.println( "fil.readUTF() = " + t );
 
         if(t.equals("fagbok") ){
-          System.out.println("vi er i 'fagbok' sin if gren ");
           Fagbok2 nyFagbok = new Fagbok2();
           nyFagbok.lesFraFil( fil );
           settInn( nyFagbok );
