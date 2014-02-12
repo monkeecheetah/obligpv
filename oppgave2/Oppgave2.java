@@ -29,15 +29,18 @@ public class Oppgave2 extends JFrame{
 	private JButton ok;
 	private JTextArea utfelt;
 
+	private String navnKatalog;
+	private int antallElementer;
+	private int antallKodelinjer;
+	private int totaltantallKodelinjer;
+
+
 	private Lytter lytt;
 	
 	public Oppgave2() {
 		super("superdialogvindu");
 		lytt = new Lytter();
 		lagVindu();
-
-
-
 	}
 
 	public void lagVindu(){
