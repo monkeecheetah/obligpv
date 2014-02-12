@@ -70,8 +70,10 @@ public class Oppgave2 extends JFrame{
 		String print = " ";
 		String[]filliste = navn.list();
 		String regex = "\\w+\\.java";
-		int antall = 0;
-
+		int antallFiler = 0;
+		int antallLinjerprFil = 0;
+		int antallLinjer = 0;
+		int test = 0;
 		utfelt.setText( navn + " er en Katalog\n");
 
 		utfelt.append("\n Navn på filer i " + navn + "katalogen:\n");
@@ -79,12 +81,34 @@ public class Oppgave2 extends JFrame{
 		for(int i = 0; i < filliste.length; i++ ){
 			print += ( "\n" + filliste[i] );
 
-			if( filliste[i].matches( regex ))
-				print += (" dette er en java fil");
-			antall ++;
-		}
+			if( filliste[i].matches( regex )){
+				print += "dette er en javafil";
+				File temp = new File( filliste[i] );
+				test++;
+				System.out.println( test + "" + temp);
+				
+				try( BufferedReader inn = new BufferedReader( 
+					new FileReader(temp))){
+					System.out.println("vi er i try catch");
+					String linje = "";
 
-		utfelt.append("Tilsammen antall elementer i katalogen" + antall + print);
+					do{
+						linje = inn.readLine();
+						System.out.println("linje");
+						if( linje != null)
+							antallLinjerprFil ++;
+					}while( linje != null);
+
+						print += ("Antall linjer i filen" + antallLinjerprFil );
+				}catch( IOException ioe){
+					System.out.println("her er en feil");
+				}//slutt på try catch
+				antallLinjer += antallLinjerprFil;			
+				
+			}//slutt på for
+			antallFiler ++;
+		}
+		utfelt.append("Tilsammen antall elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
 	}
 
 	public void fil(){
