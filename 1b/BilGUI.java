@@ -7,8 +7,14 @@ public class BilGUI extends JFrame
 {
 	private JTextField regNr, carBrand, carType, regYear;
 	private JTextArea list;
-	private JButton printList, regCar, deleteCar, emptyList, findCar;
+	private JButton printAllBilerList, printList, regCar, deleteCar, emptyList, findCar;
 	private Billiste billiste = new Billiste();
+
+	private JTextField navn, adresse, idNr;
+	private JTextArea eierListen;
+	private JButton printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier;
+	private Bileierliste bileierliste = new Bileierliste();
+
 	private Kommandolytter lytteren;
 
 	public BilGUI() {
@@ -36,6 +42,10 @@ public class BilGUI extends JFrame
 		regYear.addActionListener( lytteren );
 		add( regYear );
 
+		printAllBilerList = new JButton( "Vis ALLE biler" );
+		printAllBilerList.addActionListener( lytteren );
+		add( printAllBilerList );
+
 		printList = new JButton( "Vis billiste" );
 		printList.addActionListener( lytteren );
 		add( printList );
@@ -61,7 +71,51 @@ public class BilGUI extends JFrame
 		list.setEditable( false );
 		add( new JScrollPane( list ) );
 //		skrivListe();
-		setSize(550, 400);
+		add( new JLabel("Navn:") );
+		navn = new JTextField(10);
+		navn.addActionListener(lytteren);
+		add(navn);
+
+		add( new JLabel( "Adresse:" ) );
+		adresse = new JTextField( 10 );
+		adresse.addActionListener( lytteren );
+		add( adresse );
+
+		add( new JLabel( "Personnummer/OrgNr:" ) );
+		idNr = new JTextField( 10 );
+		idNr.addActionListener( lytteren );
+		add( idNr );
+
+		printEierList = new JButton( "Vis bileierliste" );
+		printEierList.addActionListener( lytteren );
+		add( printEierList );
+
+		findEier = new JButton( "Finn bileier" );
+		findEier.addActionListener( lytteren );
+		add( findEier );
+
+		emptyEierList = new JButton( "Slett bileiere" );
+		emptyEierList.addActionListener( lytteren );
+		add( emptyEierList );
+
+		deleteEier = new JButton( "Slett eier" );
+		deleteEier.addActionListener( lytteren );
+		add( deleteEier );
+
+		regPerson = new JButton( "Registrer person" );
+		regPerson.addActionListener( lytteren );
+		add( regPerson );
+
+		regFirma = new JButton( "Registrer firma" );
+		regFirma.addActionListener( lytteren );
+		add( regFirma );
+
+		add( new JLabel( "Biloversikt:" ) );
+		eierListen = new JTextArea( 10, 45 );
+		eierListen.setEditable( false );
+		add( new JScrollPane( eierListen ) );
+
+		setSize(1150, 800);
 		setVisible(true);
 	}
 	private void visFeilmelding(String melding) {
@@ -73,12 +127,16 @@ public class BilGUI extends JFrame
   // forrest i lista heltallsliste
 	public void insertCar() {
 		try {
+			String n = navn.getText();
 			String cB = carBrand.getText();
 			String cT = carType.getText(); 
 			int rN = Integer.parseInt(regNr.getText()); 
 			int rY = Integer.parseInt(regYear.getText());
 			System.out.print(cB+cT+rN+ rY);
-			billiste.insertBil(cB,cT, rN, rY);
+			Bileier be = bileierliste.find(n);
+			Billiste bl = new Billiste(); 
+			bl = be.getBilliste();
+			bl.insertBil(cB,cT, rN, rY);
 			carBrand.setText("");
 			carType.setText("");
 			regNr.setText("");
@@ -89,8 +147,14 @@ public class BilGUI extends JFrame
 		}
 	}
 
-	public void printList() {
+	public void printAllBilerList() {
 		billiste.writeList(list);
+	}
+
+	public void printList() {
+		String n = navn.getText();
+		Bileier be = bileierliste.find(n);
+		be.getBilliste().writeList(list);
 	}
 
   //fjerner f?rste forekomst av det innleste tallet fra lista
@@ -124,6 +188,53 @@ public class BilGUI extends JFrame
 		}
 	}
 
+	public void insertPerson() {
+		String n = navn.getText();
+		String a = adresse.getText(); 
+		int i = Integer.parseInt(idNr.getText()); 
+		System.out.print(n+a+i);
+		bileierliste.insertPerson(n,a,i);
+		navn.setText("");
+		adresse.setText("");
+		idNr.setText("");
+	}
+
+	public void insertFirma() {
+		String n = navn.getText();
+		String a = adresse.getText(); 
+		int i = Integer.parseInt(idNr.getText()); 
+		System.out.print(n+a+i);
+		bileierliste.insertPerson(n,a,i);
+		navn.setText("");
+		adresse.setText("");
+		idNr.setText("");
+	}	
+
+	public void printEierList() {
+		bileierliste.writeList(eierListen);
+	}
+
+  //fjerner f?rste forekomst av det innleste tallet fra lista
+	public void removeEier() {
+		String n = navn.getText();
+		if (bileierliste.removeEier(n)) {
+			eierListen.setText("\t"+ n +" er fjernet fra listen.");
+		} else {
+			eierListen.setText("\t"+ n +" finnes ikke i listen.");
+		}
+		navn.setText( "" );
+	}
+
+	public void findEier() {  
+		String n = navn.getText();
+		Bileier be = bileierliste.find(n);
+		if (be != null)
+			eierListen.setText("\t"+ be.getNavn()+" er  funnet i listen.");
+		else
+			eierListen.setText("\t"+ be +" er ikke funnet i listen.");
+		navn.setText("");
+	}
+
 	private class Kommandolytter implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			if ( e.getSource() == printList ) {
@@ -140,7 +251,25 @@ public class BilGUI extends JFrame
 			}
 			else if ( e.getSource() == findCar ) {
 				findCar();
+			}
+			else if ( e.getSource() == printEierList ) {
+				printEierList();
+			}
+			else if ( e.getSource() == regPerson ) {
+				insertPerson();
+			}
+			else if ( e.getSource() == regFirma ) {
+				insertFirma();
 			}			
+			else if ( e.getSource() == deleteEier ) {
+				removeEier();
+			}
+			else if ( e.getSource() == emptyEierList ) {
+				bileierliste.emptyEierList();
+			}
+			else if ( e.getSource() == findEier ) {
+				findEier();
+			}						
 		}
 	}
 }

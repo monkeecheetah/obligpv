@@ -63,7 +63,7 @@ public class Billiste {
 		else {
 			Bil pointer = first;
 			while (pointer != null){
-				elements.append(pointer.getRegNr() + " ");
+				elements.append(pointer.toString() + " ");
 				pointer = pointer.next;
 			}
 			elements.append("\n");

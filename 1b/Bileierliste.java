@@ -22,7 +22,7 @@ public class Bileierliste {
 
 	public Bileier find(String n) {
 		Bileier find = first;
-		while (first != null && !(first.getNavn().equals(n)))
+		while (first != null && !(find.getNavn().equals(n)))
 			find = find.next;
 		return find;
 	}
@@ -45,7 +45,7 @@ public class Bileierliste {
 		return false;
 	}
 
-	public boolean emptyList() {
+	public boolean emptyEierList() {
 		if(first != null) {
 			return false;
 		}

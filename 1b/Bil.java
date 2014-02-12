@@ -30,6 +30,6 @@ public class Bil  {
 		return regNr;
 	}
 	public String toString() {
-		return ""+regNr;
+		return carBrand+ " " + carType + "\nRegistreringsnummer"+regNr+"\nRegistrert: " + regY;
 	}
 }
