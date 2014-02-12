@@ -89,26 +89,36 @@ public class Oppgave2 extends JFrame{
 			antallLinjer += antallLinjerprFil;			
 			antallFiler ++;	
 			}//slutt på for
-		utfelt.append("Tilsammen antall elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
+		utfelt.append("Tilsammen antall    elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
 	}
 
 	public void fil(){
 		if(!navn.isFile())
 			return;
+		JFileChooser filbehandler = new JFileChooser();
+		filvelger.setCurrentDirectory( new File("."));
+
 
 		try(BufferedReader innfil = new BufferedReader(new FileReader(navn))){
-		
+			
 			
 		}catch(IOException ioe){
 			System.out.println("error");
 		}
-
 		utfelt.append( navn + " er en fil");
 	}
+
+	public void genererNyFil(){
+		try( BuffredReader lesfil = new BuffredReader( new FileReader(navn))){
+			PrintWriter skrivfil = new PrintWriter( new FileWriter(nyfil ))
+		}
+	}
+
 
 	private class Lytter implements ActionListener{
 		public void actionPerformed( ActionEvent e ){}
 	}
+
 
 
 

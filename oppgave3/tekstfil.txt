@@ -1,0 +1,8 @@
+Hittil har vi bare tatt for oss overføring til og fra fil av enkelt-byter, 16-biters-tegn og av hele tekstlinjer. Vi har også lært hvordan vi kan bufre en strøm for å oppnå bedre effektivitet. Bufringen kan vi oppfatte figurlig på den måten at vi sender den opprinnelige strømmen gjennom et filter som omformer strømmen. I klassebibliotekets java.io-pakke finnes det også klasser som definerer andre typer av filtre som vi kan sende strømmer igjennom for å omforme dem på forskjellige måter. En av disse filtertypene konverterer mellom byte-strømmer og javas primitive datatyper. Slike filtre må vi derfor bruke når vi vil overføre verdier av de primitive datatypene til og fra fil. De aktuelle filterklassene heter DataOutputStream og DataInputStream. For at de skal virke som filtre, må vi bruke dem som "innpakning" rundt henholdsvis FileOutputStream og FileInputStream, på tilsvarende måte som vi gjorde i tilfelle bufring.
+
+Eksempel
+
+  DataOutputStream output = new DataOutputStream(
+                              new FileOutputStream( < filnavn > ) );
+Dersom vi i tillegg ønsker bufring, må vi sende strømmen gjennom et bufferfilter før vi sender den gjennom DataInputStream- eller DataOutputStream-filteret, siden vi ønsker å bruke bufrede lese- og skrivemetoder fra disse.
+
