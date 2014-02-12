@@ -29,18 +29,20 @@ public class Oppgave2 extends JFrame{
 	private JButton ok;
 	private JTextArea utfelt;
 
-	private String navnKatalog;
-	private int antallElementer;
-	private int antallKodelinjer;
-	private int totaltantallKodelinjer;
 
+	private File navn;
 
 	private Lytter lytt;
 	
-	public Oppgave2() {
+	public Oppgave2( String n ) {
 		super("superdialogvindu");
 		lytt = new Lytter();
 		lagVindu();
+
+		navn = new File (n);
+
+		katalog();
+		fil();
 	}
 
 	public void lagVindu(){
@@ -61,10 +63,41 @@ public class Oppgave2 extends JFrame{
 		setVisible(true);
 	}
 
+	public void katalog(){
+		if(!navn.isDirectory() )
+			return;
+
+		String print = " ";
+		String[]filliste = navn.list();
+		String regex = "\\w+\\.java";
+		int antall = 0;
+
+		utfelt.setText( navn + " er en Katalog\n");
+
+		utfelt.append("\n Navn på filer i " + navn + "katalogen:\n");
+		
+		for(int i = 0; i < filliste.length; i++ ){
+			print += ( "\n" + filliste[i] );
+
+			if( filliste[i].matches( regex ))
+				print += (" dette er en java fil");
+			antall ++;
+		}
+
+		utfelt.append("Tilsammen antall elementer i katalogen" + antall + print);
+	}
+
+	public void fil(){
+		if(!navn.isFile())
+			return;
+		System.out.println("");
+		utfelt.append( navn + " er en fil");
+	}
+
 	private class Lytter implements ActionListener{
 		public void actionPerformed( ActionEvent e ){}
 	}
 
-	
+
 
 }
