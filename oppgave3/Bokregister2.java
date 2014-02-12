@@ -4,13 +4,10 @@ import java.io.*;
 public class Bokregister2{
   private Bok2 head;
 
-  // private Bokvindu = vindu; 
-  //registrerer et bokobjekt
   public void settInn( Bok2 ny )
   {
     System.out.println("vi er i sett inn metoden");
     if(ny == null){
-      System.out.println("Objektet er tomt");
       return;
     }
     ny.neste = head;

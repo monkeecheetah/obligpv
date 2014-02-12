@@ -65,4 +65,6 @@ public class Oppgave2 extends JFrame{
 		public void actionPerformed( ActionEvent e ){}
 	}
 
+	
+
 }

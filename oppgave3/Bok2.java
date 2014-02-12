@@ -19,6 +19,12 @@ public abstract class Bok2{
 	}
 
 	public void skrivTilFil( DataOutputStream output ) throws IOException{
+		System.out.println("Vi er i skriv til fil i bok");
+		System.out.println("Type bok = " + typeBok);
+		System.out.println("forfatter =" + forfatter);
+		System.out.println("Tittel = " + tittel);
+		System.out.println("Sideantall = " + sideantall);
+		System.out.println("Pris = " + pris);
 		output.writeUTF( typeBok );
 		output.writeUTF( forfatter );
 		output.writeUTF( tittel );

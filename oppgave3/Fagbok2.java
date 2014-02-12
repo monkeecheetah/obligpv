@@ -6,7 +6,9 @@ public class Fagbok2 extends Bok2{
 
 	public Fagbok2(String f, String t, int s, double p, String fb){
 		super("fagbok", f, t, s, p);
+		System.out.println("vi er i fagbok");
 		fagbok = fb;
+		System.out.println("Fagområde = " + fb);
 	}
 
 	public void skrivTilFil( DataOutputStream output ) throws IOException{
@@ -16,11 +18,11 @@ public class Fagbok2 extends Bok2{
 	}
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
-		System.out.println("Vi er i fagbok klassen");
+		System.out.println("Vi er i fagbok les Fra fil metoden");
 		if( input != null){
 			super.lesFraFil( input );
 			fagbok = input.readUTF();
-			System.out.println("Fagbok =" + fagbok);
+			System.out.println("Fagområde =" + fagbok);
 
 			return true;
 		}
