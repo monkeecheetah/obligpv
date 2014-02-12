@@ -1,3 +1,9 @@
+// programmutvikling oblig 1 OPPGAVE 3 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// sub klasse av Bok2
+
 import java.io.*;
 
 public class Skolebok2 extends Bok2{
@@ -17,17 +23,13 @@ public class Skolebok2 extends Bok2{
 		super.skrivTilFil(output);
 		output.writeInt( klassetrinn );
 		output.writeUTF( skolefag );
-		//< Skriver datafeltenes verdier til fil. >
 	}
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
 		if( input != null){
-			System.out.println("vi er i skolebok");
-			super.lesFraFil( input );
+			super.lesFraFil( TYPE, input );
 			klassetrinn = input.readInt();
-			System.out.println("Klassetrinn =" + klassetrinn);
 			skolefag = input.readUTF();
-			System.out.println("Skolefag= " + skolefag);
 			return true;
 		}
 		return false;
@@ -39,7 +41,6 @@ public class Skolebok2 extends Bok2{
 					super.toString() +
 			  		"Klassetrinn: " + klassetrinn + "\n" + 
 			  		"Fag: " + skolefag + "\n";
-
 		return s;
 	}
 }

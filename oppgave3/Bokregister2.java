@@ -1,3 +1,10 @@
+// programmutvikling oblig 1 OPPGAVE 3 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+//Bokregister setter inn objekter av klassen Bok2 og dens subklasser i en liste
+//samt skriver datastrukturen til fil og leser fra fil ved oppstart.
+
 import javax.swing.*;
 import java.io.*;
 
@@ -13,8 +20,6 @@ public class Bokregister2{
     ny.neste = head;
     head = ny;
   }
-
-
 
   public void skrivTilfil( String filnavn ){
     try( DataOutputStream fil = new DataOutputStream( new FileOutputStream(filnavn) ) ){

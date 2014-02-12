@@ -1,3 +1,9 @@
+// programmutvikling oblig 1 OPPGAVE 3 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// abstrakt sub klasse av bok, superklasse for NorskRoman2 og UtenlandsRoman2
+
 import java.io.*;
 
 public abstract class Roman2 extends Bok2 {
@@ -13,19 +19,14 @@ public abstract class Roman2 extends Bok2 {
 	public void skrivTilFil( DataOutputStream output ) throws IOException{
 		super.skrivTilFil(output);
 		output.writeUTF( sjanger );
-		//< Skriver datafeltenes verdier til fil. >
 	}
 
-	public boolean lesFraFil( DataInputStream input) throws IOException{
+	public boolean lesFraFil( String type, DataInputStream input) throws IOException{
 		if( input != null){
-			System.out.println("vi er i roman");
-			super.lesFraFil( input );
+			super.lesFraFil( type, input );
 			sjanger = input.readUTF();
-			System.out.println("sjanger =" + sjanger);
 			return true;
-		}
-		
-	 	//< Leser verdier fra fil og plaserer dem i de tilhørende datafeltene>
+		}		
 	 	return false;
 	}
 

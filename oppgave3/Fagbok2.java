@@ -1,3 +1,9 @@
+// programmutvikling oblig 1 OPPGAVE 3 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// sub klasse av Bok2
+
 import java.io.*;
 public class Fagbok2 extends Bok2{
 
@@ -15,24 +21,18 @@ public class Fagbok2 extends Bok2{
 	public void skrivTilFil( DataOutputStream output ) throws IOException{
 		super.skrivTilFil(output);
 		output.writeUTF( fagbok );
-		//< Skriver datafeltenes verdier til fil. >
 	}
 
 	public boolean lesFraFil( DataInputStream input) throws IOException{
-		System.out.println("Vi er i fagbok les Fra fil metoden");
 		if( input != null){
 			super.lesFraFil( TYPE, input );
 			fagbok = input.readUTF();
-			System.out.println("Fagområde =" + fagbok);
-
 			return true;
 		}
-	 	//< Leser verdier fra fil og plaserer dem i de tilhørende datafeltene>
 	 	return false;
 	}
 
 	public String toString(){
-
 		return "\nFagbok\n" + 
 				super.toString() + 
 				"Fagbok: " + fagbok + "\n";
