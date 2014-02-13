@@ -85,13 +85,13 @@ public class Bileierliste {
 	public boolean removeEier(String n) {
 		if(first == null) //tom liste
 			return false;
-		if(first.getNavn().equals(n)) {
+		if(first.getNavn().equals(n) && first.getBilliste() == null) {
 			first = first.next;
 			return true;
 		}
 		Bileier pointer = first;
 		while (pointer.next != null) {
-			if (pointer.next.getNavn().equals(n)) {
+			if (pointer.next.getNavn().equals(n) && pointer.next.getBilliste() == null) {
 				pointer.next = pointer.next.next;
 				return true;
 			}
