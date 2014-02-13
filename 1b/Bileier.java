@@ -28,6 +28,7 @@ public abstract class Bileier {
 	public Billiste getBilliste() {
 		return billiste;
 	}
+
 	public String getNavn() {
 		return navn;
 	}

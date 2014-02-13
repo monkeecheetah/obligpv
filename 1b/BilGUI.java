@@ -9,7 +9,6 @@ public class BilGUI extends JFrame
 	private JTextArea list;
 	private JButton printAllBilerList, printList, regCar, deleteCar, emptyList, findCar;
 	private Billiste billiste = new Billiste();
-
 	private JTextField navn, adresse, idNr;
 	private JTextArea eierListen;
 	private JButton printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier;
@@ -128,11 +127,13 @@ public class BilGUI extends JFrame
 	public void insertCar() {
 		try {
 			String n = navn.getText();
+			if(bileierliste.finnesBilEier(n)) {
+				return;				
+			}
 			String cB = carBrand.getText();
 			String cT = carType.getText(); 
 			int rN = Integer.parseInt(regNr.getText()); 
 			int rY = Integer.parseInt(regYear.getText());
-			System.out.print(cB+cT+rN+ rY);
 			Bileier be = bileierliste.find(n);
 			Billiste bl = new Billiste(); 
 			bl = be.getBilliste();
@@ -142,13 +143,21 @@ public class BilGUI extends JFrame
 			regNr.setText("");
 			regYear.setText("");									
 		}
+		catch (NullPointerException npe) {
+			visFeilmelding("Noen felter mangler!");
+		}		
 		catch (NumberFormatException e) {
 			visFeilmelding("Feil i tallformat.");
 		}
 	}
 
 	public void printAllBilerList() {
-		billiste.writeList(list);
+		if(bileierliste.getFirst() == null) {
+			return;
+		}
+		Bileier pointer = bileierliste.getFirst();
+		while(pointer.next != null)
+		list.append(pointer.toString());
 	}
 
 	public void printList() {
@@ -189,25 +198,61 @@ public class BilGUI extends JFrame
 	}
 
 	public void insertPerson() {
-		String n = navn.getText();
-		String a = adresse.getText(); 
-		int i = Integer.parseInt(idNr.getText()); 
-		System.out.print(n+a+i);
-		bileierliste.insertPerson(n,a,i);
-		navn.setText("");
-		adresse.setText("");
-		idNr.setText("");
+		try{
+			String n = navn.getText();
+			if(bileierliste.finnesBilEier(n)) {
+				eierListen.setText("Bileieren finnes fra for!");
+				return;
+			}
+			String a = adresse.getText(); 
+			int i = Integer.parseInt(idNr.getText()); 
+			if(bileierliste.finnesPersonId(i)) {
+				eierListen.setText("Personen er allerede registrert");
+				return;
+			}			
+			bileierliste.insertPerson(n,a,i);
+			navn.setText("");
+			adresse.setText("");
+			idNr.setText("");
+			eierListen.setText("");			
+			eierListen.append(n + " er lagt til!");			
+		}
+		catch (NullPointerException npe) {
+			visFeilmelding("Fyll inn navn, adresse og ID!");
+		}		
+		catch (NumberFormatException e) {
+			visFeilmelding("Mangler id.");
+		}
 	}
 
 	public void insertFirma() {
-		String n = navn.getText();
-		String a = adresse.getText(); 
-		int i = Integer.parseInt(idNr.getText()); 
-		System.out.print(n+a+i);
-		bileierliste.insertPerson(n,a,i);
-		navn.setText("");
-		adresse.setText("");
-		idNr.setText("");
+		try{
+			String n = navn.getText();
+			if(bileierliste.finnesBilEier(n)) {
+				eierListen.setText("Bileieren finnes!");
+				return;
+			}
+			int i = Integer.parseInt(idNr.getText()); 
+			if(bileierliste.finnesFirmaId(i)) {
+				eierListen.setText("Firmaet er allerede registrert");
+				return;
+			}
+			String a = adresse.getText(); 
+
+			System.out.print(n+a+i);
+			bileierliste.insertPerson(n,a,i);
+			navn.setText("");
+			adresse.setText("");
+			idNr.setText("");
+			eierListen.setText("");
+			eierListen.append(n + " er lagt til!");
+		}
+		catch (NullPointerException npe) {
+			visFeilmelding("Fyll inn navn, adresse og ID!");
+		}
+		catch (NumberFormatException e) {
+			visFeilmelding("Mangler id.");
+		}
 	}	
 
 	public void printEierList() {

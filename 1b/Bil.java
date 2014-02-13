@@ -30,6 +30,16 @@ public class Bil  {
 		return regNr;
 	}
 	public String toString() {
-		return carBrand+ " " + carType + "\nRegistreringsnummer"+regNr+"\nRegistrert: " + regY;
+		StringBuilder bygger = new StringBuilder();
+		bygger.append("\n");
+		bygger.append(carBrand);
+		bygger.append(" ");
+		bygger.append(carType);
+		bygger.append("\nRegistreringsnummer");
+		bygger.append(regNr);
+		bygger.append("\nRegistrert");
+		bygger.append(regY);
+		String tekst = bygger.toString();
+		return tekst;
 	}
 }

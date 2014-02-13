@@ -6,4 +6,14 @@ public class Person extends Bileier {
 		super(n,a);
 		personNummer = p;
 	}
+
+	public int getPId() {
+		return personNummer;
+	}	
+	public String toString(){
+		String output = "";
+		output = super.toString();
+		output += "\n"+personNummer;
+		return output;
+	}	
 }

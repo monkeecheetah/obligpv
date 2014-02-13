@@ -8,6 +8,10 @@ public class Bileierliste {
 		first = null;
 	}
 
+	public Bileier getFirst() {
+		return first;
+	}
+
 	public void insertPerson(String n, String a, int p) {
 		Person ny = new Person(n, a, p);
 		ny.next = first;
@@ -20,11 +24,62 @@ public class Bileierliste {
 		first = ny;
 	}
 
+	public boolean finnesPersonId(int i) {
+		if(first == null) {
+			return false;
+		}
+		Bileier pointer = first;
+
+		while(pointer != null){
+			if(pointer instanceof Person){
+				Person temp = (Person) pointer;
+				if(temp.getPId() == i) {
+					return true;
+				}				
+			}
+
+			pointer = pointer.next;
+		}
+		return false;
+	}
+
+	public boolean finnesFirmaId(int i) {
+		if(first == null) {
+			return false;
+		}
+		Bileier pointer = first;
+		while(pointer != null){
+			if(pointer instanceof Firma) {
+				Firma temp = (Firma) pointer;
+				if(temp.getFId() == i) {
+					return true;
+				}
+			}
+
+			pointer = pointer.next;
+		}
+		return false;
+	}
+
+	public boolean finnesBilEier(String n) {
+		if(first == null) {
+			return false;
+		}
+		Bileier pointer = first;
+		while(pointer != null){
+			if(pointer.getNavn().equals(n) ) {
+				return true;
+			}
+			pointer = pointer.next;
+		}
+		return false;
+	}
+
 	public Bileier find(String n) {
-		Bileier find = first;
-		while (first != null && !(find.getNavn().equals(n)))
-			find = find.next;
-		return find;
+		Bileier pointer = first;
+		while (pointer != null && !(pointer.getNavn().equals(n)))
+			pointer = pointer.next;
+		return pointer;
 	}
 
 	public boolean removeEier(String n) {
@@ -59,11 +114,10 @@ public class Bileierliste {
 		else {
 			Bileier pointer = first;
 			while (pointer != null){
-				elements.append(pointer.getNavn() + "\n");
+				elements.append(pointer.toString() + "\n");
 				pointer = pointer.next;
 			}
 			elements.append("\n");
 		}
 	}
-
 }

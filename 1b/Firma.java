@@ -6,4 +6,14 @@ public class Firma extends Bileier {
 		super(n,a);
 		foretaksNummer = f;
 	}
+	public int getFId() {
+		return foretaksNummer;
+	}
+	public String toString(){
+		String output = "";
+		output = super.toString();
+		output += "\n"+foretaksNummer;
+		return output;
+	}
+
 }
