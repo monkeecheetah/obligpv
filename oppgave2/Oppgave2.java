@@ -117,13 +117,13 @@ public class Oppgave2 extends JFrame{
 			String utlinje = "";
 			int linjeteller = 1;
 			do{
-				innlinjer = innfil.readLine();
-				utlinje = linjeteller + innlinjer;
-				System.out.println(utlinje);
+				
+				utlinje = linjeteller + "   " + innlinjer;
+				utfelt.append("\n" + utlinje);
 						if(innlinjer != null)
 							linjeteller ++;
-					}while(innlinjer != null );	
-
+				innlinjer = innfil.readLine();
+			}while(innlinjer != null );	
 		}catch(IOException ioe){
 			System.out.println("error!!!!");
 		}
