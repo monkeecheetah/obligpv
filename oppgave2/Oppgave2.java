@@ -71,7 +71,7 @@ public class Oppgave2 extends JFrame{
 
 				try(BufferedReader innfil = new BufferedReader(new FileReader(temp))){
 					String innlinjer = null;
-
+					antallLinjerprFil = 0;
 					do{
 						innlinjer = innfil.readLine();
 						if(innlinjer != null)
@@ -85,35 +85,53 @@ public class Oppgave2 extends JFrame{
 
 				String fil = filliste[i];
 				System.out.println(temp);					
+				antallLinjer += antallLinjerprFil;					
 			}
-			antallLinjer += antallLinjerprFil;			
 			antallFiler ++;	
 			}//slutt på for
-		utfelt.append("Tilsammen antall    elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
+		utfelt.append("Tilsammen antall elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
 	}
 
 	public void fil(){
 		if(!navn.isFile())
 			return;
-		JFileChooser filbehandler = new JFileChooser();
-		//filvelger.setCurrentDirectory( new File("."));
+		utfelt.append(navn + " er en fil");
+		String filnavn = navn.getName();
+		System.out.println("filnavn = " + filnavn);
 
+		String regexJAVA = "\\w+\\.java";
+		String regexTXT = "\\w+\\.txt";
 
-		try(BufferedReader innfil = new BufferedReader(new FileReader(navn))){
-			
-			
-		}catch(IOException ioe){
-			System.out.println("error");
+		if( filnavn.matches(regexTXT) || filnavn.matches(regexJAVA) ){
+			System.out.println("vi er i if");
+			String match = "";
+			match = ( filnavn.matches( regexTXT )) ? (" av type tekstfil") : ( "av type javafil");
+			utfelt.append("\n"+match);
+			lesfraFil();
 		}
-		utfelt.append( navn + " er en fil");
+	} 
+
+	public void lesfraFil(){
+		try(BufferedReader innfil = new BufferedReader(new FileReader(navn))){
+			String innlinjer = innfil.readLine();
+			String utlinje = "";
+			int linjeteller = 1;
+			do{
+				innlinjer = innfil.readLine();
+				utlinje = linjeteller + innlinjer;
+				System.out.println(utlinje);
+						if(innlinjer != null)
+							linjeteller ++;
+					}while(innlinjer != null );	
+
+		}catch(IOException ioe){
+			System.out.println("error!!!!");
+		}
 	}
 
-	// public void genererNyFil(){
-	// 	try( BuffredReader lesfil = new BuffredReader( new FileReader(navn))){
-	// 		PrintWriter skrivfil = new PrintWriter( new FileWriter(nyfil ))
-	// 	}
-	// }
-
+	public String kopiFil( String fnavn, String enavn ){
+		return "";
+	}
 
 	private class Lytter implements ActionListener{
 		public void actionPerformed( ActionEvent e ){}
