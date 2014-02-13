@@ -96,7 +96,7 @@ public class Oppgave2 extends JFrame{
 		if(!navn.isFile())
 			return;
 		JFileChooser filbehandler = new JFileChooser();
-		filvelger.setCurrentDirectory( new File("."));
+		//filvelger.setCurrentDirectory( new File("."));
 
 
 		try(BufferedReader innfil = new BufferedReader(new FileReader(navn))){
@@ -108,11 +108,11 @@ public class Oppgave2 extends JFrame{
 		utfelt.append( navn + " er en fil");
 	}
 
-	public void genererNyFil(){
-		try( BuffredReader lesfil = new BuffredReader( new FileReader(navn))){
-			PrintWriter skrivfil = new PrintWriter( new FileWriter(nyfil ))
-		}
-	}
+	// public void genererNyFil(){
+	// 	try( BuffredReader lesfil = new BuffredReader( new FileReader(navn))){
+	// 		PrintWriter skrivfil = new PrintWriter( new FileWriter(nyfil ))
+	// 	}
+	// }
 
 
 	private class Lytter implements ActionListener{
