@@ -3,9 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class BilGUI extends JFrame
+public class BilGUI extends JFrame implements Serializable
 {
-	final BilEierGUI vindu2 = new BilEierGUI();
 	private JTextField regNr, carBrand, carType, regYear;
 	private JTextArea list;
 	private JButton printAllBilerList, printList, regCar, deleteCar, emptyList, findCar;
@@ -14,16 +13,12 @@ public class BilGUI extends JFrame
 	private JTextArea eierListen;
 	private JButton printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier;
 	private Bileierliste bileierliste = new Bileierliste();
-
 	private Kommandolytter lytteren;
-
-	public Bileierliste getBilEierListe() {
-		return bileierliste;
-	}
 
 	public BilGUI() {
 		super("Bilregistrering");
 		lytteren = new Kommandolytter();
+
 		setLayout( new FlowLayout() );
 
 		add( new JLabel("Registreringsnummer:") );
@@ -118,7 +113,7 @@ public class BilGUI extends JFrame
 		eierListen = new JTextArea( 10, 45 );
 		eierListen.setEditable( false );
 		add( new JScrollPane( eierListen ) );
-
+		lesFil();
 		setSize(1150, 800);
 		setVisible(true);
 	}
@@ -283,6 +278,39 @@ public class BilGUI extends JFrame
 		else
 			eierListen.setText("\t"+ be +" er ikke funnet i listen.");
 		navn.setText("");
+	}
+
+	private void lesFil() {
+		try (ObjectInputStream innfil = new ObjectInputStream(
+			new FileInputStream( "src/liste.data" ))) {
+				bileierliste = (Bileierliste) innfil.readObject();
+			}
+		catch(ClassNotFoundException cnfe) {
+			eierListen.setText(cnfe.getMessage());
+			eierListen.append("\nOppretter tom liste.\n");
+			bileierliste = new Bileierliste();
+		}
+		catch(FileNotFoundException fne) {
+			eierListen.setText("Finner ikke datafil. Oppretter tom liste.\n");
+			bileierliste = new Bileierliste();
+		}
+		catch(IOException ioe) {
+			eierListen.setText("Innlesingsfeil. Oppretter tom liste.\n");
+			bileierliste = new Bileierliste();
+		}
+	}
+
+	public void skrivTilFil() {
+		try (ObjectOutputStream utfil = new ObjectOutputStream(
+			new FileOutputStream("test.dta"))) {
+				utfil.writeObject(bileierliste);
+		}
+		catch( NotSerializableException nse ) {
+			visFeilmelding("Objektet er ikke serialisert!");
+		}
+		catch( IOException ioe ) {
+			visFeilmelding("Problem med utskrift til fil.");
+		}
 	}
 
 	private class Kommandolytter implements ActionListener {

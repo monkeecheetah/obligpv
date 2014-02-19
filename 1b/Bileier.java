@@ -15,7 +15,7 @@ foretaksnummer (trenger ikke a vare et "ekte" foretaksnummer)
 (Foretaksnummer er noe som alle virkelige firmaer ma ha. Det brukes blant annet i forskjellige offentlige registre.)
 
 */
-public abstract class Bileier {
+public abstract class Bileier  {
 	private String navn, adresse;
 	private Billiste billiste = new Billiste();
 	Bileier next;

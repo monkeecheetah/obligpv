@@ -11,7 +11,7 @@ Lag et brukergrensesnitt og et hovedprogram som gjor det mulig a teste ut alle m
 import javax.swing.JTextArea;
 import java.io.*;
  
-public class Billiste {
+public class Billiste implements Serializable {
 	private Bil first;
 
 	public Billiste() {

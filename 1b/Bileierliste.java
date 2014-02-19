@@ -1,7 +1,7 @@
 import javax.swing.JTextArea;
 import java.io.*;
 
-public class Bileierliste {
+public class Bileierliste implements Serializable {
 	private Bileier first;
 
 	public Bileierliste(){
