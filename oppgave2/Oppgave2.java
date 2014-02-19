@@ -99,8 +99,8 @@ public class Oppgave2 extends JFrame{
 		String filnavn = navn.getName();
 		System.out.println("filnavn = " + filnavn);
 
-		String regexJAVA = "\\w+\\.java";
-		String regexTXT = "\\w+\\.txt";
+		String regexJAVA = "\\+\\.java";
+		String regexTXT = "\\.+\\.txt";
 
 		if( filnavn.matches(regexTXT) || filnavn.matches(regexJAVA) ){
 			System.out.println("vi er i if");
@@ -116,8 +116,7 @@ public class Oppgave2 extends JFrame{
 			String innlinjer = innfil.readLine();
 			String utlinje = "";
 			int linjeteller = 1;
-			do{
-				
+			do{			
 				utlinje = linjeteller + "   " + innlinjer;
 				utfelt.append("\n" + utlinje);
 						if(innlinjer != null)
@@ -129,6 +128,23 @@ public class Oppgave2 extends JFrame{
 		}
 	}
 
+	public void skrivTilFil(){
+		File minfil = name;
+		JFileChooser filvelger = minfil;
+		filvelger.setCurrentDirectory( new File("."));
+
+		int resultat = filvelger.showSaveDialog( null );
+
+		if( resultat == JFileChooser.APPROVE_OPTION ){
+			String f = "kopi" + navn.getName();
+			try( BufferedReader fil = new BufferedReader( new FileInputStream( navn.getName() ))){
+
+			}catch(IOException ioe){
+				System.out.println("error you cunt");
+			}
+		}
+	}
+
 	public String kopiFil( String fnavn, String enavn ){
 		return "";
 	}
@@ -136,8 +152,4 @@ public class Oppgave2 extends JFrame{
 	private class Lytter implements ActionListener{
 		public void actionPerformed( ActionEvent e ){}
 	}
-
-
-
-
 }
