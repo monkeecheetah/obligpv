@@ -5,13 +5,13 @@ import java.io.*;
 
 public class BilGUI extends JFrame implements Serializable
 {
-	private JTextField regNr, carBrand, carType, regYear;
+	private JTextField regNr, carBrand, carType, regYear, nyEier;
 	private JTextArea list;
 	private JButton printAllBilerList, printList, regCar, deleteCar, emptyList, findCar;
 	private Billiste billiste = new Billiste();
 	private JTextField navn, adresse, idNr;
 	private JTextArea eierListen;
-	private JButton printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier;
+	private JButton printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier, byttEier;
 	private Bileierliste bileierliste = new Bileierliste();
 	private Kommandolytter lytteren;
 
@@ -108,6 +108,15 @@ public class BilGUI extends JFrame implements Serializable
 		regFirma = new JButton( "Registrer firma" );
 		regFirma.addActionListener( lytteren );
 		add( regFirma );
+
+		add( new JLabel("Ny eier:") );
+		nyEier = new JTextField(10);
+		nyEier.addActionListener(lytteren);
+		add(nyEier);
+
+		byttEier = new JButton( "Bytt eier" );
+		byttEier.addActionListener( lytteren );
+		add( byttEier );
 
 		add( new JLabel( "Biloversikt:" ) );
 		eierListen = new JTextArea( 10, 45 );
@@ -271,6 +280,10 @@ public class BilGUI extends JFrame implements Serializable
 	}
 
 	public void findEier() {  
+		if(navn.getText() == null) {
+			eierListen.setText("Det er ikke noe navn her. Skal du lete bor du ha noget a lete efter!");
+			return;
+		}
 		String n = navn.getText();
 		Bileier be = bileierliste.find(n);
 		if (be != null)
@@ -279,6 +292,32 @@ public class BilGUI extends JFrame implements Serializable
 			eierListen.setText("\t"+ be +" er ikke funnet i listen.");
 		navn.setText("");
 	}
+
+	public void byttEier() {
+		if(navn.getText() == null || nyEier.getText() == null)  {
+			eierListen.setText("Du ma fylle inn feltet for ny eier og for eksisterende eier");
+			return;
+		}
+		if(regNr.getText() == null) {
+			eierListen.setText("Hvilken bil skal byttes? Fyll inn regnr!");
+			return;
+		}
+		int r = Integer.parseInt(regNr.getText());		
+		String n = navn.getText();
+		String nE = nyEier.getText();		
+		Bileier gammelEier = bileierliste.find(n);
+		Bileier nyEier = bileierliste.find(nE);
+
+		if(!bileierliste.finnesBilEier(n) && !bileierliste.finnesBilEier(nE)){
+			eierListen.setText("Begge eierne skal finnes fra for.");
+			return;
+		}
+		if(gammelEier.getBilliste().find(r) == null) {
+			eierListen.setText("Bilen finnes ikke hos den eieren.");
+			return;
+		}
+		
+	}	
 
 	private void lesFil() {
 		try (ObjectInputStream innfil = new ObjectInputStream(
@@ -347,7 +386,10 @@ public class BilGUI extends JFrame implements Serializable
 			}
 			else if ( e.getSource() == findEier ) {
 				findEier();
-			}						
+			}
+			else if ( e.getSource() == byttEier ) {
+				byttEier();
+			}			
 		}
 	}
 }
