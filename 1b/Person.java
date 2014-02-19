@@ -1,4 +1,6 @@
-public class Person extends Bileier {
+import java.io.*;
+
+public class Person extends Bileier implements Serializable {
 
 	private int personNummer;
 

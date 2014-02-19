@@ -14,7 +14,7 @@ en toString-metode
 */
 import java.io.*;
 
-public class Bil  {
+public class Bil implements Serializable  {
 	private String carBrand, carType; 
 	private int regNr, regY;
 	Bil next;

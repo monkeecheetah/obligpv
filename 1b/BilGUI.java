@@ -21,22 +21,22 @@ public class BilGUI extends JFrame implements Serializable
 
 		setLayout( new FlowLayout() );
 
-		add( new JLabel("Registreringsnummer:") );
+		add( new JLabel("Registreringsnummer: ") );
 		regNr = new JTextField(10);
 		regNr.addActionListener(lytteren);
 		add(regNr);
 
-		add( new JLabel( "Bilmerke:" ) );
+		add( new JLabel( "Bilmerke: " ) );
 		carBrand = new JTextField( 10 );
 		carBrand.addActionListener( lytteren );
 		add( carBrand );
 
-		add( new JLabel( "Biltype:" ) );
+		add( new JLabel( "Biltype: " ) );
 		carType = new JTextField( 10 );
 		carType.addActionListener( lytteren );
 		add( carType );
 
-		add( new JLabel( "Registreringsar" ) );
+		add( new JLabel( "Registreringsar: " ) );
 		regYear = new JTextField( 5 );
 		regYear.addActionListener( lytteren );
 		add( regYear );
@@ -127,7 +127,7 @@ public class BilGUI extends JFrame implements Serializable
 	public void insertCar() {
 		try {
 			String n = navn.getText();
-			if(bileierliste.finnesBilEier(n)) {
+			if(!bileierliste.finnesBilEier(n)) {
 				return;				
 			}
 			String cB = carBrand.getText();
@@ -282,7 +282,7 @@ public class BilGUI extends JFrame implements Serializable
 
 	private void lesFil() {
 		try (ObjectInputStream innfil = new ObjectInputStream(
-			new FileInputStream( "src/liste.data" ))) {
+			new FileInputStream( "test.dta" ))) {
 				bileierliste = (Bileierliste) innfil.readObject();
 			}
 		catch(ClassNotFoundException cnfe) {

@@ -1,4 +1,6 @@
-public class Firma extends Bileier {
+import java.io.*;
+
+public class Firma extends Bileier implements Serializable {
 
 	private int foretaksNummer;
 
