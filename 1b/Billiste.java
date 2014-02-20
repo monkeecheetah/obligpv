@@ -24,9 +24,15 @@ public class Billiste implements Serializable {
 		first = ny;
 	}
 
+	public void insertBil(Bil b) {
+		Bil ny = b;
+		ny.next = first;
+		first = ny;
+	}	
+
 	public Bil find(int n) {
 		Bil find = first;
-		while (first != null && first.getRegNr() != n)
+		while (find != null && find.getRegNr() != n)
 			find = find.next;
 		return find;
 	}
@@ -54,6 +60,21 @@ public class Billiste implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	public String listOfCars() {
+		String output = "";
+		if (first == null)
+			output = "Har ingen bilder\n";
+		else {
+			Bil pointer = first;
+			while (pointer != null){
+				output += pointer.toString();
+				pointer = pointer.next;
+			}
+			output += "\n";
+		}
+		return output;
 	}
 
 	public void writeList(JTextArea elements) {

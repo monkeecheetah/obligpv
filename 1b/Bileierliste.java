@@ -12,6 +12,81 @@ public class Bileierliste implements Serializable {
 		return first;
 	}
 
+	public Bil finnBil(int r) {
+		if(first == null) {
+			return null;
+		}
+		Bileier pointer = first;
+		Billiste tempListe;
+		Bil funnet;
+		while(pointer != null){
+			tempListe = pointer.getBilliste();
+			if(tempListe.find(r) != null) {
+				return tempListe.find(r);
+			}
+			pointer = pointer.next;
+		}
+		return null;
+	}
+
+	public Bileier finnEier(int r) {
+		if(first == null) {
+			return null;
+		}
+		Bileier pointer = first;
+		Billiste tempListe;
+		Bil funnet;
+		while(pointer != null){
+			tempListe = pointer.getBilliste();
+			if(tempListe.find(r) != null) {		
+				return pointer;
+			}
+			pointer = pointer.next;
+		}
+		return null;
+	}
+
+	public String giveMeAllCars() {
+		String output = "";
+		if(first == null) {
+			return output;
+		}
+		Bileier pointer = first;
+		Billiste tempListe;
+		Bil funnet;
+		while(pointer != null){
+			tempListe = pointer.getBilliste();
+			output += pointer.toString()+"\n";
+			output += "Har disse bilene:";
+			output += tempListe.listOfCars();
+			pointer = pointer.next;
+		}
+		return output;
+	}
+
+	public Bil slettBil(int r) {
+
+		if(first == null) {
+			return null;
+		}
+		Bileier pointer = first;
+		Billiste tempListe;
+		Bil funnet;
+		while(pointer != null){
+			tempListe = pointer.getBilliste();
+			if(tempListe.find(r) == null) {
+				
+			} else if(tempListe.find(r) != null) {
+				funnet = tempListe.find(r);
+				tempListe.removeCar(r);
+				return funnet;
+			}
+			pointer = pointer.next;
+		}
+		return null;
+
+	}
+
 	public void insertPerson(String n, String a, int p) {
 		Person ny = new Person(n, a, p);
 		ny.next = first;
@@ -100,11 +175,8 @@ public class Bileierliste implements Serializable {
 		return false;
 	}
 
-	public boolean emptyEierList() {
-		if(first != null) {
-			return false;
-		}
-		return true;
+	public void emptyEierList() {
+		first = null;
 	}
 
 	public void writeList(JTextArea elements) {
