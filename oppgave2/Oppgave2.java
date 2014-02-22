@@ -10,8 +10,8 @@ import java.io.*;
 
 public class Oppgave2 extends JFrame{
 
-	private JTextField innfelt;
-	private JButton ok;
+	private String tilTekstfil;
+	private JButton lagre;
 	private JTextArea utfelt;
 
 	private File navn;
@@ -21,38 +21,49 @@ public class Oppgave2 extends JFrame{
 	
 	public Oppgave2( String n ) {
 		super("superdialogvindu");
+		tilTekstfil = "";
 		lytt = new Lytter();
-		lagVindu();
+		Container c = getContentPane();
+		lagVindu(c);
 
-		navn = new File (n);
+		navn = new File (n);	
 
-		katalog();
-		fil();
+		start(c);
 	}
 
-	public void lagVindu(){
 
-		Container c = getContentPane();
+	public void lagVindu(Container c){
+
 		c.setLayout( new FlowLayout() );
 
-		ok = new JButton("OK");
-		innfelt = new JTextField(27);
+		lagre = new JButton("LAGRE");
 		utfelt = new JTextArea( 30,40);
 		c.add( new JLabel("Innlesingsfelt") );	
-		c.add( innfelt );
-		c.add(ok);
-		ok.addActionListener(lytt);
+
 		c.add( utfelt );
 		utfelt.setEditable(false);
 		add( new JScrollPane( utfelt ));
-		setSize(550,550);
+		c.add(lagre);
+		setSize(550,650);
 		setVisible(true);
 	}
 
-	public void katalog(){
-		 if(!navn.isDirectory() )
-		 	return;
+	public void start(Container c){
+		while( !navn.exists() ){
+			utfelt.setText("Finner ikke fil eller katalog");
+			String filnavn = JOptionPane.showInputDialog(null, "Skriv navnet på en fil eller en katalog");
+			navn = new File(filnavn);
+		}
+		
+		if(navn.isDirectory() ){
+		 	katalog();
+		}
+		else if(navn.isFile()){
+			fil(c);
+		}
+	}
 
+	public void katalog(){
 		String print = " ";
 		String[]filliste = navn.list();
 		String regex = "\\w+\\.java";
@@ -62,7 +73,7 @@ public class Oppgave2 extends JFrame{
 
 		utfelt.setText( navn + " er en Katalog\n");
 
-		utfelt.append("\n Navn på filer i " + navn + "katalogen:\n");
+		utfelt.append("\nNavn på filer i katalogen:\n\n");
 	
 		for(int i = 0; i < filliste.length; i++ ){
 			print += ( "\n" + filliste[i] );
@@ -83,73 +94,82 @@ public class Oppgave2 extends JFrame{
 				}
 				print += "\t   <---Antall kodelinjer = " + antallLinjerprFil;
 
-				String fil = filliste[i];
-				System.out.println(temp);					
+				String fil = filliste[i];		
 				antallLinjer += antallLinjerprFil;					
 			}
 			antallFiler ++;	
-			}//slutt på for
-		utfelt.append("Tilsammen antall elementer i katalogen = " + antallFiler + print + "\nAntal kodelinjer i Java filer: " + antallLinjer );
+			}
+		utfelt.append( print +"\n\n-------------------------------------\nAntal kodelinjer i Java filer: " + antallLinjer + "\nTilsammen antall elementer i katalogen = " + antallFiler);
 	}
 
-	public void fil(){
-		if(!navn.isFile())
-			return;
-		utfelt.append(navn + " er en fil");
+	public void fil(Container c){
+		utfelt.setText(navn + " er en fil");
 		String filnavn = navn.getName();
-		System.out.println("filnavn = " + filnavn);
-
-		String regexJAVA = "\\+\\.java";
-		String regexTXT = "\\.+\\.txt";
+		String regexJAVA = "\\w+.java";
+		String regexTXT = "\\w+.txt";
 
 		if( filnavn.matches(regexTXT) || filnavn.matches(regexJAVA) ){
-			System.out.println("vi er i if");
+
 			String match = "";
 			match = ( filnavn.matches( regexTXT )) ? (" av type tekstfil") : ( "av type javafil");
 			utfelt.append("\n"+match);
 			lesfraFil();
 		}
+
+
+		lagre.addActionListener(lytt);
 	} 
 
 	public void lesfraFil(){
-		try(BufferedReader innfil = new BufferedReader(new FileReader(navn))){
+		try(BufferedReader innfil = new BufferedReader(new FileReader(navn)))
+		{
 			String innlinjer = innfil.readLine();
 			String utlinje = "";
+
 			int linjeteller = 1;
 			do{			
 				utlinje = linjeteller + "   " + innlinjer;
-				utfelt.append("\n" + utlinje);
+				tilTekstfil += ("\n" + utlinje);
 						if(innlinjer != null)
 							linjeteller ++;
 				innlinjer = innfil.readLine();
+			
 			}while(innlinjer != null );	
+
 		}catch(IOException ioe){
 			System.out.println("error!!!!");
 		}
 	}
 
-	public void skrivTilFil(){
-		File minfil = name;
-		JFileChooser filvelger = minfil;
+	public void skrivTilFil(){		
+		JFileChooser filvelger = new JFileChooser();
 		filvelger.setCurrentDirectory( new File("."));
-
-		int resultat = filvelger.showSaveDialog( null );
+		int resultat = filvelger.showSaveDialog( this );
+		File fil;
 
 		if( resultat == JFileChooser.APPROVE_OPTION ){
-			String f = "kopi" + navn.getName();
-			try( BufferedReader fil = new BufferedReader( new FileInputStream( navn.getName() ))){
+			fil = filvelger.getSelectedFile();
+			String nyFil = fil.getPath();
+		
+			try(BufferedWriter utfil = new BufferedWriter(new FileWriter(nyFil))){
+				utfil.write(tilTekstfil);
+				utfelt.append("\n\n-------------------------------\nFilen er lagret som " + fil.getName());
+				utfelt.append("\n\n-------------------------------\n"
+					+ tilTekstfil);
+
 
 			}catch(IOException ioe){
-				System.out.println("error you cunt");
+				System.out.println("error");
 			}
+
 		}
 	}
 
-	public String kopiFil( String fnavn, String enavn ){
-		return "";
-	}
-
 	private class Lytter implements ActionListener{
-		public void actionPerformed( ActionEvent e ){}
+		public void actionPerformed( ActionEvent e ){
+			if(e.getSource() == lagre){
+				skrivTilFil();
+			}
+		}
 	}
 }
