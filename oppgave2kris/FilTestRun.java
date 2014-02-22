@@ -1,12 +1,12 @@
 import java.awt.event.*;
 
-public class BilMain {
+public class FilTestRun {
 	public static void main(String[] args) {
-		final BilGUI vindu = new BilGUI();
-
+		final FilGUI vindu = new FilGUI();
+		System.out.println("Du har apnet et vindu");
 		vindu.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
-		});
+		});		
 	}
 }
