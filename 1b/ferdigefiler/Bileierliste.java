@@ -21,8 +21,8 @@ public class Bileierliste implements Serializable {
 		Bil funnet;
 		while(pointer != null){
 			tempListe = pointer.getBilliste();
-			if(tempListe.find(r) != null) {
-				return tempListe.find(r);
+			if(tempListe.findBiler(r) != null) {
+				return tempListe.findBiler(r);
 			}
 			pointer = pointer.next;
 		}
@@ -38,7 +38,7 @@ public class Bileierliste implements Serializable {
 		Bil funnet;
 		while(pointer != null){
 			tempListe = pointer.getBilliste();
-			if(tempListe.find(r) != null) {		
+			if(tempListe.findBiler(r) != null) {		
 				return pointer;
 			}
 			pointer = pointer.next;
@@ -49,6 +49,7 @@ public class Bileierliste implements Serializable {
 	public String giveMeAllCars() {
 		String output = "";
 		if(first == null) {
+                        output += "Det finnes ingen bileiere";
 			return output;
 		}
 		Bileier pointer = first;
@@ -57,8 +58,9 @@ public class Bileierliste implements Serializable {
 		while(pointer != null){
 			tempListe = pointer.getBilliste();
 			output += pointer.toString()+"\n";
-			output += "Har disse bilene:";
+			output += "Har disse bilene:\n";
 			output += tempListe.listOfCars();
+                        output += "\n";
 			pointer = pointer.next;
 		}
 		return output;
@@ -74,10 +76,10 @@ public class Bileierliste implements Serializable {
 		Bil funnet;
 		while(pointer != null){
 			tempListe = pointer.getBilliste();
-			if(tempListe.find(r) == null) {
+			if(tempListe.findBiler(r) == null) {
 				
-			} else if(tempListe.find(r) != null) {
-				funnet = tempListe.find(r);
+			} else if(tempListe.findBiler(r) != null) {
+				funnet = tempListe.findBiler(r);
 				tempListe.removeCar(r);
 				return funnet;
 			}
@@ -150,7 +152,7 @@ public class Bileierliste implements Serializable {
 		return false;
 	}
 
-	public Bileier find(String n) {
+	public Bileier findEier(String n) {
 		Bileier pointer = first;
 		while (pointer != null && !(pointer.getNavn().equals(n)))
 			pointer = pointer.next;
@@ -160,13 +162,13 @@ public class Bileierliste implements Serializable {
 	public boolean removeEier(String n) {
 		if(first == null) //tom liste
 			return false;
-		if(first.getNavn().equals(n) && first.getBilliste() == null) {
+		if(first.getNavn().equals(n) && first.getBilliste() != null) {
 			first = first.next;
 			return true;
 		}
 		Bileier pointer = first;
 		while (pointer.next != null) {
-			if (pointer.next.getNavn().equals(n) && pointer.next.getBilliste() == null) {
+			if (pointer.next.getNavn().equals(n)) {
 				pointer.next = pointer.next.next;
 				return true;
 			}
@@ -182,7 +184,7 @@ public class Bileierliste implements Serializable {
 	public void writeList(JTextArea elements) {
 		elements.setText("");
 		if (first == null)
-			elements.append( "Tom bileierliste:(\n" );
+			elements.append( "Tom bileierliste :(\n" );
 		else {
 			Bileier pointer = first;
 			while (pointer != null){

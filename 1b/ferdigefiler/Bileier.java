@@ -1,20 +1,3 @@
-/*Dere skal na lage register over bileiere. Klassen Bileier skal vare en abstrakt superklasse til de to konkrete subklassene Person og Firma. Ogsa dette registeret skal lages som en dynamisk liste, Bileierliste, der objektene i lista enten vil vare et Person-objekt eller et Firma-objekt, (og indirekte objekter av typen Bileier).
-
-Den abstrakte superklassen Bileier skal ha folgende datafelt:
-
-navn
-adresse
-liste av bilene (0 eller flere) som bileieren eier (Bruk billisten fra oppgave a)
-en peker til neste Bileier-objekt i lista (Person-objekt eller Firma-objekt)
-For bileiere av typen Person skal det dessuten registreres
-
-personnummer (trenger ikke a vare et "ekte" personnummer)
-For bileiere av type Firma skal det isteden registreres
-
-foretaksnummer (trenger ikke a vare et "ekte" foretaksnummer)
-(Foretaksnummer er noe som alle virkelige firmaer ma ha. Det brukes blant annet i forskjellige offentlige registre.)
-
-*/
 import java.io.*;
 public abstract class Bileier implements Serializable {
 	private String navn, adresse;

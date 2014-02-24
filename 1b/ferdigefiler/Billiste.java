@@ -30,7 +30,7 @@ public class Billiste implements Serializable {
 		first = ny;
 	}	
 
-	public Bil find(int n) {
+	public Bil findBiler(int n) {
 		Bil find = first;
 		while (find != null && find.getRegNr() != n)
 			find = find.next;
@@ -61,11 +61,18 @@ public class Billiste implements Serializable {
 		}
 		return true;
 	}
-
+        
+        public boolean isListEmpty() {
+            if( first == null)
+                return true;
+            else
+                return false;
+        }
+        
 	public String listOfCars() {
 		String output = "";
 		if (first == null)
-			output = "Har ingen bilder\n";
+			output = "Har ingen biler\n";
 		else {
 			Bil pointer = first;
 			while (pointer != null){

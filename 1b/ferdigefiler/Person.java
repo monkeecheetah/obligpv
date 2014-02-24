@@ -15,7 +15,7 @@ public class Person extends Bileier implements Serializable {
 	public String toString(){
 		String output = "";
 		output = super.toString();
-		output += "\n"+personNummer;
+		output += "\nPersonnummer: "+personNummer;
 		return output;
 	}	
 }

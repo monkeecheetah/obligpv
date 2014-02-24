@@ -31,15 +31,15 @@ public class Bil implements Serializable  {
 	}
 	public String toString() {
 		StringBuilder bygger = new StringBuilder();
-		bygger.append("\n");
 		bygger.append(carBrand);
 		bygger.append(" ");
 		bygger.append(carType);
-		bygger.append("\nRegistreringsnummer");
+		bygger.append("\nRegistreringsnummer: ");
 		bygger.append(regNr);
-		bygger.append("\nRegistrert");
+		bygger.append("\nRegistrert: ");
 		bygger.append(regY);
-		String tekst = bygger.toString();
+		bygger.append("\n");
+                String tekst = bygger.toString();
 		return tekst;
 	}
 }

@@ -14,7 +14,7 @@ public class Firma extends Bileier implements Serializable {
 	public String toString(){
 		String output = "";
 		output = super.toString();
-		output += "\n"+foretaksNummer;
+		output += "\nOrgNr: "+foretaksNummer;
 		return output;
 	}
 
