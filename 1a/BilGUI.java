@@ -1,3 +1,9 @@
+// programutvikling oblig 1 OPPGAVE 1a
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// Klassen Bil sitt brukergrensesnitt
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,25 +23,29 @@ public class BilGUI extends JFrame
 		setLayout( new FlowLayout() );
 
 		add( new JLabel("Registreringsnummer:") );
-		regNr = new JTextField(10);
+		regNr = new JTextField(8);
 		regNr.addActionListener(lytteren);
 		add(regNr);
 
-		add( new JLabel( "Bilmerke:" ) );
-		carBrand = new JTextField( 10 );
+		add( new JLabel( "Bilmerke: " ) );
+		carBrand = new JTextField( 12 );
 		carBrand.addActionListener( lytteren );
 		add( carBrand );
 
-		add( new JLabel( "Biltype:" ) );
-		carType = new JTextField( 10 );
+		add( new JLabel( "Biltype: " ) );
+		carType = new JTextField( 12 );
 		carType.addActionListener( lytteren );
 		add( carType );
 
-		add( new JLabel( "Registreringsar" ) );
+		add( new JLabel( "Registreringsår" ) );
 		regYear = new JTextField( 5 );
 		regYear.addActionListener( lytteren );
 		add( regYear );
 
+                regCar = new JButton( "Registrer bil" );
+		regCar.addActionListener( lytteren );
+		add( regCar );
+                
 		printList = new JButton( "Vis billiste" );
 		printList.addActionListener( lytteren );
 		add( printList );
@@ -52,16 +62,12 @@ public class BilGUI extends JFrame
 		deleteCar.addActionListener( lytteren );
 		add( deleteCar );
 
-		regCar = new JButton( "Registrer bil" );
-		regCar.addActionListener( lytteren );
-		add( regCar );
-
 		add( new JLabel( "Biloversikt:" ) );
-		list = new JTextArea( 10, 45 );
+		list = new JTextArea( 20, 20 );
 		list.setEditable( false );
 		add( new JScrollPane( list ) );
 //		skrivListe();
-		setSize(550, 400);
+		setSize(280, 600);
 		setVisible(true);
 	}
 	private void visFeilmelding(String melding) {
@@ -69,43 +75,69 @@ public class BilGUI extends JFrame
 			"Problem", JOptionPane.ERROR_MESSAGE);
 	}
 
-  //leser inn heltall fra brukeren og setter det inn
-  // forrest i lista heltallsliste
 	public void insertCar() {
 		try {
 			String cB = carBrand.getText();
 			String cT = carType.getText(); 
-			int rN = Integer.parseInt(regNr.getText()); 
+			boolean feil = false;
+                        String feilMelding = "Følgende felter må fylles ut: \n";
+                        
+                        if(cB.length() == 0) {
+                            feil = true;
+                            feilMelding += "\nBilmerke";
+                        }
+                        if(cT.length() == 0) {
+                            feil = true;
+                            feilMelding += "\nBiltype";
+                        }
+                        if(regNr.getText().length() == 0) {
+                            feil = true;
+                            feilMelding += "\nRegNr";
+                        }
+                        if(regYear.getText().length() == 0) {
+                            feil = true;
+                            feilMelding += "\nRegistreringsår";
+                        }              
+                        if(feil == true) {
+                            list.setText(feilMelding);
+                            return;
+                        }
+                        int rN = Integer.parseInt(regNr.getText()); 
 			int rY = Integer.parseInt(regYear.getText());
-			System.out.print(cB+cT+rN+ rY);
 			billiste.insertBil(cB,cT, rN, rY);
-			carBrand.setText("");
+                        list.setText("Bilen er registrert");
+                        carBrand.setText("");
 			carType.setText("");
 			regNr.setText("");
-			regYear.setText("");									
+			regYear.setText("");	
 		}
 		catch (NumberFormatException e) {
-			visFeilmelding("Feil i tallformat.");
+			visFeilmelding("Registreringnr og registreringsnummer må være siffer.");
 		}
 	}
 
 	public void printList() {
 		billiste.writeList(list);
 	}
+        
+        public void emptyList() {
+                billiste.emptyList();        
+                list.setText("Listen er slettet");
+        }
 
   //fjerner f?rste forekomst av det innleste tallet fra lista
 	public void removeCar() {
 		try {
 			int r = Integer.parseInt(regNr.getText());
 			if (billiste.removeCar(r)) {
-				list.setText("\t"+ r +" er fjernet fra listen.");
+				list.setText(r +" er fjernet fra listen.");
 			} else {
-				list.setText("\t"+ r +" finnes ikke i listen.");
+				list.setText(r +" ble ikke fjernet fra listen.");
 			}
 			regNr.setText( "" );
 		}
 		catch (NumberFormatException e) {
-			visFeilmelding("Feil i tallformat.");
+			visFeilmelding("Registreringsnummer må være tall.");
 		}
 	}
 
@@ -114,13 +146,13 @@ public class BilGUI extends JFrame
 			int r = Integer.parseInt(regNr.getText());
 			Bil b = billiste.find(r);
 			if (b != null)
-        		list.setText("\t"+ b.getRegNr()+" er  funnet i listen.");
+        		list.setText(b.toString()+" er  funnet i listen.");
 			else
-        		list.setText("\t"+ r +" er ikke funnet i listen.");
+        		list.setText(r +" er ikke funnet i listen.");
 			regNr.setText("");
 		}
 		catch (NumberFormatException e) {
-			visFeilmelding("Feil i tallformat.");
+			visFeilmelding("Registreringsnummer må være tall.");
 		}
 	}
 
@@ -136,7 +168,7 @@ public class BilGUI extends JFrame
 				removeCar();
 			}
 			else if ( e.getSource() == emptyList ) {
-				billiste.emptyList();
+                                emptyList();
 			}
 			else if ( e.getSource() == findCar ) {
 				findCar();
