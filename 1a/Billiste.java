@@ -28,7 +28,7 @@ public class Billiste {
 	}
 
 	public boolean removeCar(int r) {
-		if(first == null) //tom liste
+		if(first == null) 
 			return false;
 		if(first.getRegNr() == r) {
 			first = first.next;

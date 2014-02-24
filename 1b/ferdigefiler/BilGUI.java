@@ -186,7 +186,7 @@ public class BilGUI extends JFrame implements Serializable
                         list.setText("Bilen er registrert");
 		}
 		catch (NumberFormatException e) {
-			visFeilmelding("Feil i tallformat.");
+			visFeilmelding("Registreringsår og registreringsnummer må være tall.");
 		}
 	}
 
@@ -226,7 +226,7 @@ public class BilGUI extends JFrame implements Serializable
 			regNr.setText( "" );
 		}
 		catch (NumberFormatException e) {
-			list.setText("Feil i tallformat.");
+			list.setText("Registreringsnummeret består bare av tall.");
 		}
 	}
 
@@ -245,7 +245,7 @@ public class BilGUI extends JFrame implements Serializable
 			regNr.setText("");
 		}
 		catch (NumberFormatException e) {
-			visFeilmelding("Registreringsnummer må være et tall.");
+			visFeilmelding("Registreringsnummer består bare av tall.");
 		}
 	}
 
@@ -275,7 +275,7 @@ public class BilGUI extends JFrame implements Serializable
                             return;
                         }
                         if(bileierliste.finnesBilEier(n)) {
-				eierListen.setText("Bileieren finnes fra for!");
+				eierListen.setText("Bileieren finnes fra før!");
 				return;
 			}
 
@@ -289,9 +289,6 @@ public class BilGUI extends JFrame implements Serializable
 			idNr.setText("");
 			eierListen.setText(n + " er lagt til!");			
 		}
-		catch (NullPointerException npe) {
-			visFeilmelding("Fyll inn navn, adresse og ID!");
-		}		
 		catch (NumberFormatException e) {
 			visFeilmelding("Personnummer kan kun være tall.");
 		}
@@ -336,9 +333,6 @@ public class BilGUI extends JFrame implements Serializable
 			idNr.setText("");
 			eierListen.setText("");
 			eierListen.append(n + " er lagt til!");
-		}
-		catch (NullPointerException npe) {
-			visFeilmelding("Fyll inn navn, adresse og ID!");
 		}
 		catch (NumberFormatException e) {
 			visFeilmelding("Orgnr kan kun være tall.");

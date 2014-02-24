@@ -1,4 +1,4 @@
-// programmutvikling oblig 1 OPPGAVE 3 
+// programutvikling oblig 1 OPPGAVE 3 
 // stine marie aas grumheden s193467
 // kristoffer johansen s193370
 // klasse HINGDATA13H1AA

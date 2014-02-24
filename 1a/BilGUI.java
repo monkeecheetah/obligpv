@@ -66,7 +66,6 @@ public class BilGUI extends JFrame
 		list = new JTextArea( 20, 20 );
 		list.setEditable( false );
 		add( new JScrollPane( list ) );
-//		skrivListe();
 		setSize(280, 600);
 		setVisible(true);
 	}
@@ -125,7 +124,6 @@ public class BilGUI extends JFrame
                 list.setText("Listen er slettet");
         }
 
-  //fjerner f?rste forekomst av det innleste tallet fra lista
 	public void removeCar() {
 		try {
 			int r = Integer.parseInt(regNr.getText());

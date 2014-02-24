@@ -35,7 +35,7 @@ public class Billiste implements Serializable {
 	}
 
 	public boolean removeCar(int r) {
-		if(first == null) //tom liste
+		if(first == null) 
 			return false;
 		if(first.getRegNr() == r) {
 			first = first.next;
@@ -94,11 +94,4 @@ public class Billiste implements Serializable {
 			elements.append("\n");
 		}
 	}
-/*  public void settInnForrest(Bil ny)  
-  {
-    ny.next = first;
-    first = ny;
-  }  
-*/
-
 }

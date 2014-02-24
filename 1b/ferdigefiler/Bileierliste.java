@@ -166,7 +166,7 @@ public class Bileierliste implements Serializable {
 	}
 
 	public boolean removeEier(String n) {
-		if(first == null) //tom liste
+		if(first == null)
 			return false;
 		if(first.getNavn().equals(n) && first.getBilliste() != null) {
 			first = first.next;
