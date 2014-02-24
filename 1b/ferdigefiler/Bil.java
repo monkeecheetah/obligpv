@@ -1,17 +1,9 @@
-/*
-Dere skal lage bilregister som lagrer informasjon om forskjellige biler. Registeret skal lages som en dynamisk liste der hvert objekt i lista er av typen Bil. Klassen Bil skal ha folgende datafelt:
+// programutvikling oblig 1 OPPGAVE 1b
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// Klassen bil som blir satt i billiste
 
-kjennetegn (registreringsnummer)
-merke og type (f.eks. Ferrari Testarossa)
-arstall for forste gangs registrering
-en peker til neste bil-objekt i lista
-Klassen Bil skal ha folgende metoder:
-
-konstruktor som initialiserer datafeltene
-get-metode for kjennetegn
-en toString-metode
-
-*/
 import java.io.*;
 
 public class Bil implements Serializable  {

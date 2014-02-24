@@ -1,3 +1,9 @@
+// programutvikling oblig 1 OPPGAVE 1b 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// hovedprogrammet
+
 import java.awt.event.*;
 
 public class BilMain {

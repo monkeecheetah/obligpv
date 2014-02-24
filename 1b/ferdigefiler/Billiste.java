@@ -1,13 +1,10 @@
-/*
-Den dynamiske lista Billiste trenger kun et datafelt, nemlig en peker til forste Bil-objekt i lista, men skal ha folgende metoder:
+// programutvikling oblig 1 OPPGAVE 1b 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// Klasse med liste over biler som er en liste i listen bileiere
 
-metode som setter et nytt Bil-objekt inn i lista
-metode som finner et gitt Bil-objekt inn i lista ut fra bilens registreringsnummer
-metode som fjerner et nytt Bil-objekt fra lista ut fra bilens registreringsnummer
-metode som avgjor om lista er tom eller ikke
-metode som returnerer en tekst med informasjon om alle bilene i lista
-Lag et brukergrensesnitt og et hovedprogram som gjor det mulig a teste ut alle metodene.
-*/
+
 import javax.swing.JTextArea;
 import java.io.*;
  

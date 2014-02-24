@@ -1,3 +1,9 @@
+// programutvikling oblig 1 OPPGAVE 1b
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// GUI til oppgaven
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -5,13 +11,10 @@ import java.io.*;
 
 public class BilGUI extends JFrame implements Serializable
 {
-	private JTextField regNr, carBrand, carType, regYear, nyEier;
-	private JTextArea list;
-	private JButton printAllBilerList, printList, regCar, deleteCar,findCar; // emptyList;
+	private JTextField regNr, carBrand, carType, regYear, nyEier, navn, adresse, idNr, regNavn;
+	private JTextArea eierListen, list;
+	private JButton printAllBilerList, printList, regCar, deleteCar,findCar, printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier, byttEier;
 	private Billiste billiste = new Billiste();
-	private JTextField navn, adresse, idNr;
-	private JTextArea eierListen;
-	private JButton printEierList, regPerson, regFirma, deleteEier, emptyEierList, findEier, byttEier;
 	private Bileierliste bileierliste = new Bileierliste();
 	private Kommandolytter lytteren;
 
@@ -59,6 +62,18 @@ public class BilGUI extends JFrame implements Serializable
 		eierListen = new JTextArea( 10, 45 );
 		eierListen.setEditable( false );
 		c.add( new JScrollPane( eierListen ) );
+
+                printAllBilerList = new JButton( "Vis ALLE biler" );
+		printAllBilerList.addActionListener( lytteren );
+		c.add( printAllBilerList );
+
+		printList = new JButton( "Vis billiste" );
+		printList.addActionListener( lytteren );
+		c.add( printList );
+                
+                add(new JLabel ("Bileier: (navn)"));
+                regNavn = new JTextField(10);
+                c.add(regNavn);
                 
                 add( new JLabel("Registreringsnummer: ") );
 		regNr = new JTextField(8);
@@ -80,33 +95,18 @@ public class BilGUI extends JFrame implements Serializable
 		regYear.addActionListener( lytteren );
 		c.add( regYear );
 
-		printAllBilerList = new JButton( "Vis ALLE biler" );
-		printAllBilerList.addActionListener( lytteren );
-		c.add( printAllBilerList );
+                regCar = new JButton( "Registrer bil" );
+		regCar.addActionListener( lytteren );
+		c.add( regCar );
 
-		printList = new JButton( "Vis billiste" );
-		printList.addActionListener( lytteren );
-		c.add( printList );
-
-		findCar = new JButton( "Finn bil" );
-		findCar.addActionListener( lytteren );
-		c.add( findCar );
 
                 findEier = new JButton( "Finn bileier" );
 		findEier.addActionListener( lytteren );
 		c.add( findEier );
                 
-/*		emptyList = new JButton( "Slett billiste" );
-		emptyList.addActionListener( lytteren );
-		c.add( emptyList );
-*/
 		deleteCar = new JButton( "Slett bil" );
 		deleteCar.addActionListener( lytteren );
 		c.add( deleteCar );
-
-		regCar = new JButton( "Registrer bil" );
-		regCar.addActionListener( lytteren );
-		c.add( regCar );
 
                 c.add( new JLabel("Ny eier:") );
 		nyEier = new JTextField(10);
@@ -134,7 +134,11 @@ public class BilGUI extends JFrame implements Serializable
 		try {
 			boolean feil = false;
 			String feilMelding = "Du har glemt og fylle feltene";
-
+                        
+                        if(regNavn.getText().length() == 0) {
+                            feil = true;
+                            feilMelding += "\nBileier";
+                        }
 			if(regNr.getText().length() == 0) {
 				feil = true;
 				feilMelding += "\nRegistreringsnummer";
@@ -145,7 +149,7 @@ public class BilGUI extends JFrame implements Serializable
 			} 
 			if(carBrand.getText().length() == 0) {
 				feil = true;
-				feilMelding += "\nBiltype";
+				feilMelding += "\nBilmerke";
 			} 
 			if(carType.getText().length() == 0) {
 				feil = true;
@@ -155,8 +159,8 @@ public class BilGUI extends JFrame implements Serializable
 				list.setText(feilMelding);
 				return;
 			}
-
-			String n = navn.getText();                        
+                        
+			String n = regNavn.getText();
 			if(!bileierliste.finnesBilEier(n)) {
                                 list.setText("Bileieren finnes ikke. Bilen må ha en bileier før du legger inn en ny bil");
 				return;				
@@ -166,7 +170,13 @@ public class BilGUI extends JFrame implements Serializable
 			String cT = carType.getText(); 
 			int rN = Integer.parseInt(regNr.getText()); 
 			int rY = Integer.parseInt(regYear.getText());
-			Bileier be = bileierliste.findEier(n);
+                        if(bileierliste.finnBil(rN) != null){
+                            list.setText("Bilen er allerede registrert.");
+                            return;
+                        }
+
+                        
+                        Bileier be = bileierliste.findEier(n);
 			Billiste bl = be.getBilliste(); 
 			bl.insertBil(cB,cT, rN, rY);
 			carBrand.setText("");
@@ -175,26 +185,22 @@ public class BilGUI extends JFrame implements Serializable
 			regYear.setText("");
                         list.setText("Bilen er registrert");
 		}
-		catch (NullPointerException npe) {
-			visFeilmelding("Noen felter mangler!");
-		}		
 		catch (NumberFormatException e) {
 			visFeilmelding("Feil i tallformat.");
 		}
 	}
 
 	public void printAllBilerList() {
-		System.out.println(bileierliste.giveMeAllCars());
 		list.setText(bileierliste.giveMeAllCars());
 	}
 
 	public void printList() {
 
-                if(navn.getText().length() == 0) {
+                if(regNavn.getText().length() == 0) {
                     list.setText("Du må skriv inn en bileier du vil se bilene til");
                     return;
                 }
-                String n = navn.getText();                
+                String n = regNavn.getText();                
                 if(bileierliste.findEier(n) == null) {
                     list.setText("Eieren finnes ikke. Eieren må være registrert hos oss for at du skal finne hvilke biler han har");
                     return;
@@ -343,7 +349,6 @@ public class BilGUI extends JFrame implements Serializable
 		bileierliste.writeList(eierListen);
 	}
 
-  //fjerner f?rste forekomst av det innleste tallet fra lista
 	public void removeEier() {
 		String n = navn.getText();
 		if(n.length() == 0) {
@@ -386,21 +391,7 @@ public class BilGUI extends JFrame implements Serializable
 		visFeilmelding("Regnr må være tallkombinasjon.");
             }
         }
-/*        
-	public void findEier() {  
-		String n = navn.getText();
-                if(n.length() == 0) {
-			eierListen.setText("Det er ikke skrevet noe navn her. Skal du finne noe, bør du vite hva du leter etter!");
-			return;
-		}
-		Bileier be = bileierliste.findEier(n);
-		if (be != null)
-			eierListen.setText(be.getNavn()+" er  funnet registrert i våre lister.");
-		else
-			eierListen.setText(be +" er ikke funnet registrert i våre lister.");
-		navn.setText("");
-	}
-*/
+
 	public void byttEier() {
                 try{
 		String nE = nyEier.getText();                
@@ -412,7 +403,7 @@ public class BilGUI extends JFrame implements Serializable
 			eierListen.setText("Eieren må være registrert for den skal få registrert bil på seg.");
 			return;
 		}
-		if(bileierliste.finnBil(r)== null) {
+		if(bileierliste.finnBil(r) == null) {
 			eierListen.setText("Bilen finnes ikke.");
 			return;
 		}
@@ -469,10 +460,6 @@ public class BilGUI extends JFrame implements Serializable
 			else if ( e.getSource() == deleteCar ) {
 				removeCar();
 			}
-/*			else if ( e.getSource() == emptyList ) {
-				billiste.emptyList();
-			}
-        */
 			else if ( e.getSource() == findCar ) {
 				findCar();
 			}

@@ -1,3 +1,9 @@
+// programutvikling oblig 1 OPPGAVE 1b 
+// stine marie aas grumheden s193467
+// kristoffer johansen s193370
+// klasse HINGDATA13H1AA
+// Klasse med listen over bileiere
+
 import javax.swing.JTextArea;
 import java.io.*;
 
@@ -18,10 +24,10 @@ public class Bileierliste implements Serializable {
 		}
 		Bileier pointer = first;
 		Billiste tempListe;
-		Bil funnet;
 		while(pointer != null){
 			tempListe = pointer.getBilliste();
 			if(tempListe.findBiler(r) != null) {
+                            System.out.println("Vi returnerner ikke null!");
 				return tempListe.findBiler(r);
 			}
 			pointer = pointer.next;
